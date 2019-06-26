@@ -1,6 +1,6 @@
-# PySparkAudit: Python Data Audit 
+# PySparkAudit: PySpark Data Audit 
 
-This is our Python Data Audit library repositories.
+This is our PySpark Data Audit library repositories.
 The ``API`` can be found at: https://runawayhorse001.github.io/PySparkAudit. 
 If you want to install it, you can
 
