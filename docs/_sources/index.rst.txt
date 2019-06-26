@@ -1,0 +1,29 @@
+.. _index:
+
+
+  .. _fig_logo:
+  .. figure:: images/logo.png
+    :align: center
+
+Welcome to our **PySparkAudit: Python Data Audit Library API**! The PDF version can be downloaded from `HERE <PySparkAudit.pdf>`_.
+
+You can install the ``PySparkAudit`` from [PyPI](https://pypi.org/project/PySparkAudit):
+
+.. code-block:: bash
+
+    pip install PySparkAudit
+
+========
+Contents
+========
+
+.. toctree::
+   :maxdepth: 3
+   :numbered:
+
+   preface
+   install
+   basics
+   demo
+   reference
+
