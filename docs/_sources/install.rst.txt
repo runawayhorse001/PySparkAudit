@@ -15,11 +15,11 @@ How to Install
 Install with ``pip``
 ++++++++++++++++++++
 
-You can install the ``PyAudit`` from [PyPI](https://pypi.org/project/PyAudit):
+You can install the ``PySparkAudit`` from [PyPI](https://pypi.org/project/PySparkAudit):
 
 .. code-block:: bash
 
-    pip install PyAudit
+    pip install PySparkAudit
 
 
 Install from Repo
@@ -31,7 +31,7 @@ Clone the Repository
 
 .. code-block:: bash
 
-	git clone https://github.com/runawayhorse001/PyAudit.git
+	git clone https://github.com/runawayhorse001/PySparkAudit.git
 
 
 Install
@@ -39,7 +39,7 @@ Install
 
 .. code-block:: bash
 
-	cd PyAudit
+	cd PySparkAudit
 	pip install -r requirements.txt 
 	python setup.py install
 
@@ -55,7 +55,7 @@ Test
 
 .. code-block:: bash
 
-	cd PyAudit/test
+	cd PySparkAudit/test
 	python test.py
 
 
