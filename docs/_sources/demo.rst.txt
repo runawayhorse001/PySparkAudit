@@ -225,12 +225,12 @@ The files in ``00-audited_results.xlsx``:
   .. figure:: images/t_excel4.png
     :align: center  
 
-Histograms in ``Histograms.pdf``
+5. Histograms in ``Histograms.pdf``
 
   .. figure:: images/hists.png
     :align: center  
 
-Barplots in ``Bar_plots.pdf``
+6. Barplots in ``Bar_plots.pdf``
 
   .. figure:: images/bars.png
     :align: center  
