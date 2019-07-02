@@ -44,14 +44,17 @@ Install
 	python setup.py install
 
 Uninstall
----------
++++++++++
 
 .. code-block:: bash
 
 	pip uninstall statspy
 
 Test
-----
+++++
+
+Run test code
+-------------
 
 .. code-block:: bash
 

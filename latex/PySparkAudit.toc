@@ -10,9 +10,10 @@
 \contentsline {section}{\numberline {2.2}Install from Repo}{5}{section.2.2}
 \contentsline {subsection}{\numberline {2.2.1}Clone the Repository}{5}{subsection.2.2.1}
 \contentsline {subsection}{\numberline {2.2.2}Install}{5}{subsection.2.2.2}
-\contentsline {subsection}{\numberline {2.2.3}Uninstall}{5}{subsection.2.2.3}
-\contentsline {subsection}{\numberline {2.2.4}Test}{6}{subsection.2.2.4}
-\contentsline {subsection}{\numberline {2.2.5}Audited Results}{6}{subsection.2.2.5}
+\contentsline {section}{\numberline {2.3}Uninstall}{5}{section.2.3}
+\contentsline {section}{\numberline {2.4}Test}{6}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}Run test code}{6}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.2}Audited Results}{6}{subsection.2.4.2}
 \contentsline {chapter}{\numberline {3}PySpark Data Audit Functions}{9}{chapter.3}
 \contentsline {section}{\numberline {3.1}Basic Functions}{9}{section.3.1}
 \contentsline {subsection}{\numberline {3.1.1}mkdir}{9}{subsection.3.1.1}
@@ -42,8 +43,7 @@
 \contentsline {chapter}{\numberline {4}Auditing Demos}{19}{chapter.4}
 \contentsline {section}{\numberline {4.1}Auditing function by function}{19}{section.4.1}
 \contentsline {section}{\numberline {4.2}Auditing in one function}{21}{section.4.2}
-\contentsline {section}{\numberline {4.3}Auditing function by function}{23}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}print in bash}{24}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}Audited results folder}{26}{subsection.4.3.2}
-\contentsline {chapter}{\numberline {5}Main Reference}{33}{chapter.5}
-\contentsline {chapter}{Bibliography}{35}{chapter*.4}
+\contentsline {subsection}{\numberline {4.2.1}print in bash}{22}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Audited results folder}{23}{subsection.4.2.2}
+\contentsline {chapter}{\numberline {5}Main Reference}{31}{chapter.5}
+\contentsline {chapter}{Bibliography}{33}{chapter*.4}

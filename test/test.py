@@ -7,7 +7,7 @@ spark = SparkSession.builder.appName("PySpark Data Audit example")\
 # import PySparkAudit function
 from PySparkAudit import trend_plot, corr_matrix, auditing
 
-# load data
+# load dataaet
 data = spark.read.format('com.databricks.spark.csv')\
             .options(header='true',inferschema='true').load("Heart.csv",header=True);
 

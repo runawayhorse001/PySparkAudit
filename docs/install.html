@@ -89,9 +89,12 @@
 <li class="toctree-l2"><a class="reference internal" href="#install-from-repo">2.2. Install from Repo</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#clone-the-repository">2.2.1. Clone the Repository</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id1">2.2.2. Install</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#uninstall">2.2.3. Uninstall</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#test">2.2.4. Test</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#audited-results">2.2.5. Audited Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#uninstall">2.3. Uninstall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#test">2.4. Test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#run-test-code">2.4.1. Run test code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#audited-results">2.4.2. Audited Results</a></li>
 </ul>
 </li>
 </ul>
@@ -186,14 +189,17 @@ python setup.py install
 </pre></div>
 </div>
 </div>
+</div>
 <div class="section" id="uninstall">
-<h3>2.2.3. Uninstall<a class="headerlink" href="#uninstall" title="Permalink to this headline">¶</a></h3>
+<h2>2.3. Uninstall<a class="headerlink" href="#uninstall" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip uninstall statspy
 </pre></div>
 </div>
 </div>
 <div class="section" id="test">
-<h3>2.2.4. Test<a class="headerlink" href="#test" title="Permalink to this headline">¶</a></h3>
+<h2>2.4. Test<a class="headerlink" href="#test" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="run-test-code">
+<h3>2.4.1. Run test code<a class="headerlink" href="#run-test-code" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> PySparkAudit/test
 python test.py
 </pre></div>
@@ -208,21 +214,25 @@ python test.py
     <span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
 
 
-<span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="kn">import</span> <span class="n">dtypes_class</span><span class="p">,</span> <span class="n">hist_plot</span><span class="p">,</span> <span class="n">bar_plot</span><span class="p">,</span> <span class="n">freq_items</span><span class="p">,</span><span class="n">feature_len</span>
-<span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="kn">import</span> <span class="n">dataset_summary</span><span class="p">,</span> <span class="n">rates</span>
-<span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="kn">import</span> <span class="n">trend_plot</span><span class="p">,</span> <span class="n">auditing</span>
+<span class="c1"># from PySparkAudit import dtypes_class, hist_plot, bar_plot, freq_items,feature_len</span>
+<span class="c1"># from PySparkAudit import dataset_summary, rates, trend_plot</span>
+
 <span class="c1"># path = &#39;/home/feng/Desktop&#39;</span>
 
+<span class="c1"># import PySpark Audit function</span>
+<span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="kn">import</span> <span class="n">auditing</span>
 
+<span class="c1"># load dataset</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s1">&#39;Heart.csv&#39;</span><span class="p">,</span>
                       <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">inferSchema</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
+<span class="c1"># auditing in one function </span>
 <span class="k">print</span><span class="p">(</span><span class="n">auditing</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="audited-results">
-<h3>2.2.5. Audited Results<a class="headerlink" href="#audited-results" title="Permalink to this headline">¶</a></h3>
+<h3>2.4.2. Audited Results<a class="headerlink" href="#audited-results" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="figure align-center">
 <img alt="_images/t_folder.png" src="_images/t_folder.png" />
@@ -254,7 +264,7 @@ python test.py
     <p>
         &copy; Copyright 2019, Wenqiang Feng and Yiming Xu
       <span class="lastupdated">
-        Last updated on Jul 01, 2019.
+        Last updated on Jul 02, 2019.
       </span>
 
     </p>

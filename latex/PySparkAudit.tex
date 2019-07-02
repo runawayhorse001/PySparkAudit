@@ -85,7 +85,7 @@
 
 
 \title{PySparkAudit: PySpark Data Audit}
-\date{July 01, 2019}
+\date{July 02, 2019}
 \release{}
 \author{Wenqiang Feng and Yiming Xu}
 \newcommand{\sphinxlogo}{\sphinxincludegraphics{logo.png}\par}
@@ -145,7 +145,7 @@ The python version \sphinxstylestrong{PyAudit}: Python Data Audit Library API ca
 \sphinxstylestrong{Wenqiang Feng}
 \begin{itemize}
 \item {} 
-Sr. Data Scientist and PhD in Mathematics
+Data Scientist and PhD in Mathematics
 
 \item {} 
 University of Tennessee at Knoxville
@@ -235,7 +235,7 @@ python setup.py install
 \end{sphinxVerbatim}
 
 
-\subsection{Uninstall}
+\section{Uninstall}
 \label{\detokenize{install:uninstall}}
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -243,8 +243,11 @@ pip uninstall statspy
 \end{sphinxVerbatim}
 
 
-\subsection{Test}
+\section{Test}
 \label{\detokenize{install:test}}
+
+\subsection{Run test code}
+\label{\detokenize{install:run-test-code}}
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 \PYG{n+nb}{cd} PySparkAudit/test
@@ -264,15 +267,19 @@ python test.py
     \PYG{o}{.}\PYG{n}{getOrCreate}\PYG{p}{(}\PYG{p}{)}
 
 
-\PYG{k+kn}{from} \PYG{n+nn}{PySparkAudit} \PYG{k+kn}{import} \PYG{n}{dtypes\PYGZus{}class}\PYG{p}{,} \PYG{n}{hist\PYGZus{}plot}\PYG{p}{,} \PYG{n}{bar\PYGZus{}plot}\PYG{p}{,} \PYG{n}{freq\PYGZus{}items}\PYG{p}{,}\PYG{n}{feature\PYGZus{}len}
-\PYG{k+kn}{from} \PYG{n+nn}{PySparkAudit} \PYG{k+kn}{import} \PYG{n}{dataset\PYGZus{}summary}\PYG{p}{,} \PYG{n}{rates}
-\PYG{k+kn}{from} \PYG{n+nn}{PySparkAudit} \PYG{k+kn}{import} \PYG{n}{trend\PYGZus{}plot}\PYG{p}{,} \PYG{n}{auditing}
+\PYG{c+c1}{\PYGZsh{} from PySparkAudit import dtypes\PYGZus{}class, hist\PYGZus{}plot, bar\PYGZus{}plot, freq\PYGZus{}items,feature\PYGZus{}len}
+\PYG{c+c1}{\PYGZsh{} from PySparkAudit import dataset\PYGZus{}summary, rates, trend\PYGZus{}plot}
+
 \PYG{c+c1}{\PYGZsh{} path = \PYGZsq{}/home/feng/Desktop\PYGZsq{}}
 
+\PYG{c+c1}{\PYGZsh{} import PySpark Audit function}
+\PYG{k+kn}{from} \PYG{n+nn}{PySparkAudit} \PYG{k+kn}{import} \PYG{n}{auditing}
 
+\PYG{c+c1}{\PYGZsh{} load dataset}
 \PYG{n}{data} \PYG{o}{=} \PYG{n}{spark}\PYG{o}{.}\PYG{n}{read}\PYG{o}{.}\PYG{n}{csv}\PYG{p}{(}\PYG{n}{path}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Heart.csv}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}
                       \PYG{n}{sep}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{encoding}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{UTF\PYGZhy{}8}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{comment}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{header}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{inferSchema}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
 
+\PYG{c+c1}{\PYGZsh{} auditing in one function }
 \PYG{k}{print}\PYG{p}{(}\PYG{n}{auditing}\PYG{p}{(}\PYG{n}{data}\PYG{p}{,} \PYG{n}{display}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}\PYG{p}{)}
 \end{sphinxVerbatim}
 
@@ -1040,102 +1047,19 @@ For example:
     \PYG{o}{.}\PYG{n}{getOrCreate}\PYG{p}{(}\PYG{p}{)}
 
 
-\PYG{k+kn}{from} \PYG{n+nn}{PySparkAudit} \PYG{k+kn}{import} \PYG{n}{dtypes\PYGZus{}class}\PYG{p}{,} \PYG{n}{hist\PYGZus{}plot}\PYG{p}{,} \PYG{n}{bar\PYGZus{}plot}\PYG{p}{,} \PYG{n}{freq\PYGZus{}items}\PYG{p}{,}\PYG{n}{feature\PYGZus{}len}
-\PYG{k+kn}{from} \PYG{n+nn}{PySparkAudit} \PYG{k+kn}{import} \PYG{n}{dataset\PYGZus{}summary}\PYG{p}{,} \PYG{n}{rates}
-\PYG{k+kn}{from} \PYG{n+nn}{PySparkAudit} \PYG{k+kn}{import} \PYG{n}{trend\PYGZus{}plot}\PYG{p}{,} \PYG{n}{auditing}
+\PYG{c+c1}{\PYGZsh{} from PySparkAudit import dtypes\PYGZus{}class, hist\PYGZus{}plot, bar\PYGZus{}plot, freq\PYGZus{}items,feature\PYGZus{}len}
+\PYG{c+c1}{\PYGZsh{} from PySparkAudit import dataset\PYGZus{}summary, rates, trend\PYGZus{}plot}
+
 \PYG{c+c1}{\PYGZsh{} path = \PYGZsq{}/home/feng/Desktop\PYGZsq{}}
 
+\PYG{c+c1}{\PYGZsh{} import PySpark Audit function}
+\PYG{k+kn}{from} \PYG{n+nn}{PySparkAudit} \PYG{k+kn}{import} \PYG{n}{auditing}
 
+\PYG{c+c1}{\PYGZsh{} load dataset}
 \PYG{n}{data} \PYG{o}{=} \PYG{n}{spark}\PYG{o}{.}\PYG{n}{read}\PYG{o}{.}\PYG{n}{csv}\PYG{p}{(}\PYG{n}{path}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Heart.csv}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}
                       \PYG{n}{sep}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{encoding}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{UTF\PYGZhy{}8}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{comment}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{header}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{inferSchema}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
 
-\PYG{k}{print}\PYG{p}{(}\PYG{n}{auditing}\PYG{p}{(}\PYG{n}{data}\PYG{p}{,} \PYG{n}{display}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}\PYG{p}{)}
-\end{sphinxVerbatim}
-
-Result:
-
-\fvset{hllines={, ,}}%
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-   Age    Sex     ChestPain  RestBP  Chol  ...  Oldpeak  Slope   Ca        Thal  AHD
-\PYG{l+m}{0}   \PYG{l+m}{63}   True       typical     \PYG{l+m}{145}   \PYG{l+m}{233}  ...      \PYG{l+m}{2}.3      \PYG{l+m}{3}  \PYG{l+m}{0}.0       fixed   No
-\PYG{l+m}{1}   \PYG{l+m}{67}   True  asymptomatic     \PYG{l+m}{160}   \PYG{l+m}{286}  ...      \PYG{l+m}{1}.5      \PYG{l+m}{2}  \PYG{l+m}{3}.0      normal  Yes
-\PYG{l+m}{2}   \PYG{l+m}{67}   True  asymptomatic     \PYG{l+m}{120}   \PYG{l+m}{229}  ...      \PYG{l+m}{2}.6      \PYG{l+m}{2}  \PYG{l+m}{2}.0  reversable  Yes
-\PYG{l+m}{3}   \PYG{l+m}{37}   True    nonanginal     \PYG{l+m}{130}   \PYG{l+m}{250}  ...      \PYG{l+m}{3}.5      \PYG{l+m}{3}  \PYG{l+m}{0}.0      normal   No
-\PYG{l+m}{4}   \PYG{l+m}{41}  False    nontypical     \PYG{l+m}{130}   \PYG{l+m}{204}  ...      \PYG{l+m}{1}.4      \PYG{l+m}{1}  \PYG{l+m}{0}.0      normal   No
-
-\PYG{o}{[}\PYG{l+m}{5} rows x \PYG{l+m}{14} columns\PYG{o}{]}
-         feature data\PYGZus{}type  min\PYGZus{}digits  ...  zero\PYGZus{}rate  pos\PYGZus{}rate  neg\PYGZus{}rate
-Age          Age     int64           \PYG{l+m}{4}  ...   \PYG{l+m}{0}.000000  \PYG{l+m}{1}.000000       \PYG{l+m}{0}.0
-RestBP    RestBP     int64           \PYG{l+m}{4}  ...   \PYG{l+m}{0}.000000  \PYG{l+m}{1}.000000       \PYG{l+m}{0}.0
-Chol        Chol     int64           \PYG{l+m}{5}  ...   \PYG{l+m}{0}.000000  \PYG{l+m}{1}.000000       \PYG{l+m}{0}.0
-Fbs          Fbs     int64           \PYG{l+m}{3}  ...   \PYG{l+m}{0}.851485  \PYG{l+m}{0}.148515       \PYG{l+m}{0}.0
-RestECG  RestECG     int64           \PYG{l+m}{3}  ...   \PYG{l+m}{0}.498350  \PYG{l+m}{0}.501650       \PYG{l+m}{0}.0
-MaxHR      MaxHR     int64           \PYG{l+m}{4}  ...   \PYG{l+m}{0}.000000  \PYG{l+m}{1}.000000       \PYG{l+m}{0}.0
-ExAng      ExAng     int64           \PYG{l+m}{3}  ...   \PYG{l+m}{0}.673267  \PYG{l+m}{0}.326733       \PYG{l+m}{0}.0
-Oldpeak  Oldpeak   float64           \PYG{l+m}{3}  ...   \PYG{l+m}{0}.326733  \PYG{l+m}{0}.673267       \PYG{l+m}{0}.0
-Slope      Slope     int64           \PYG{l+m}{3}  ...   \PYG{l+m}{0}.000000  \PYG{l+m}{1}.000000       \PYG{l+m}{0}.0
-Ca            Ca   float64           \PYG{l+m}{3}  ...   \PYG{l+m}{0}.588629  \PYG{l+m}{0}.411371       \PYG{l+m}{0}.0
-
-\PYG{o}{[}\PYG{l+m}{10} rows x \PYG{l+m}{21} columns\PYG{o}{]}
-             feature data\PYGZus{}type  ...          top\PYGZus{}freqs  missing\PYGZus{}rate
-Sex              Sex      bool  ...          \PYG{o}{[}\PYG{l+m}{206}, \PYG{l+m}{97}\PYG{o}{]}      \PYG{l+m}{0}.000000
-ChestPain  ChestPain    object  ...  \PYG{o}{[}\PYG{l+m}{144}, \PYG{l+m}{86}, \PYG{l+m}{50}, \PYG{l+m}{23}\PYG{o}{]}      \PYG{l+m}{0}.000000
-Thal            Thal    object  ...     \PYG{o}{[}\PYG{l+m}{166}, \PYG{l+m}{117}, \PYG{l+m}{18}\PYG{o}{]}      \PYG{l+m}{0}.006601
-AHD              AHD    object  ...         \PYG{o}{[}\PYG{l+m}{164}, \PYG{l+m}{139}\PYG{o}{]}      \PYG{l+m}{0}.000000
-
-\PYG{o}{[}\PYG{l+m}{4} rows x \PYG{l+m}{10} columns\PYG{o}{]}
-              Age    RestBP      Chol  ...   Oldpeak     Slope        Ca
-Age      \PYG{l+m}{1}.000000  \PYG{l+m}{0}.284946  \PYG{l+m}{0}.208950  ...  \PYG{l+m}{0}.203805  \PYG{l+m}{0}.161770  \PYG{l+m}{0}.362605
-RestBP   \PYG{l+m}{0}.284946  \PYG{l+m}{1}.000000  \PYG{l+m}{0}.130120  ...  \PYG{l+m}{0}.189171  \PYG{l+m}{0}.117382  \PYG{l+m}{0}.098773
-Chol     \PYG{l+m}{0}.208950  \PYG{l+m}{0}.130120  \PYG{l+m}{1}.000000  ...  \PYG{l+m}{0}.046564 \PYGZhy{}0.004062  \PYG{l+m}{0}.119000
-Fbs      \PYG{l+m}{0}.118530  \PYG{l+m}{0}.175340  \PYG{l+m}{0}.009841  ...  \PYG{l+m}{0}.005747  \PYG{l+m}{0}.059894  \PYG{l+m}{0}.145478
-RestECG  \PYG{l+m}{0}.148868  \PYG{l+m}{0}.146560  \PYG{l+m}{0}.171043  ...  \PYG{l+m}{0}.114133  \PYG{l+m}{0}.133946  \PYG{l+m}{0}.128343
-MaxHR   \PYGZhy{}0.393806 \PYGZhy{}0.045351 \PYGZhy{}0.003432  ... \PYGZhy{}0.343085 \PYGZhy{}0.385601 \PYGZhy{}0.264246
-ExAng    \PYG{l+m}{0}.091661  \PYG{l+m}{0}.064762  \PYG{l+m}{0}.061310  ...  \PYG{l+m}{0}.288223  \PYG{l+m}{0}.257748  \PYG{l+m}{0}.145570
-Oldpeak  \PYG{l+m}{0}.203805  \PYG{l+m}{0}.189171  \PYG{l+m}{0}.046564  ...  \PYG{l+m}{1}.000000  \PYG{l+m}{0}.577537  \PYG{l+m}{0}.295832
-Slope    \PYG{l+m}{0}.161770  \PYG{l+m}{0}.117382 \PYGZhy{}0.004062  ...  \PYG{l+m}{0}.577537  \PYG{l+m}{1}.000000  \PYG{l+m}{0}.110119
-Ca       \PYG{l+m}{0}.362605  \PYG{l+m}{0}.098773  \PYG{l+m}{0}.119000  ...  \PYG{l+m}{0}.295832  \PYG{l+m}{0}.110119  \PYG{l+m}{1}.000000
-
-\PYG{o}{[}\PYG{l+m}{10} rows x \PYG{l+m}{10} columns\PYG{o}{]}
-
-Process finished with \PYG{n+nb}{exit} code \PYG{l+m}{0}
-\end{sphinxVerbatim}
-
-and
-\begin{quote}
-
-\begin{figure}[htbp]
-\centering
-
-\noindent\sphinxincludegraphics{{bars}.png}
-\end{figure}
-\end{quote}
-
-
-\section{Auditing function by function}
-\label{\detokenize{demo:id1}}
-For example:
-
-\fvset{hllines={, ,}}%
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYG{k+kn}{from} \PYG{n+nn}{pyspark.sql} \PYG{k+kn}{import} \PYG{n}{SparkSession}
-
-\PYG{n}{spark} \PYG{o}{=} \PYG{n}{SparkSession} \PYGZbs{}
-    \PYG{o}{.}\PYG{n}{builder} \PYGZbs{}
-    \PYG{o}{.}\PYG{n}{appName}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{Python Spark regression example}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)} \PYGZbs{}
-    \PYG{o}{.}\PYG{n}{config}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{spark.some.config.option}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{some\PYGZhy{}value}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)} \PYGZbs{}
-    \PYG{o}{.}\PYG{n}{getOrCreate}\PYG{p}{(}\PYG{p}{)}
-
-
-\PYG{k+kn}{from} \PYG{n+nn}{PySparkAudit} \PYG{k+kn}{import} \PYG{n}{dtypes\PYGZus{}class}\PYG{p}{,} \PYG{n}{hist\PYGZus{}plot}\PYG{p}{,} \PYG{n}{bar\PYGZus{}plot}\PYG{p}{,} \PYG{n}{freq\PYGZus{}items}\PYG{p}{,}\PYG{n}{feature\PYGZus{}len}
-\PYG{k+kn}{from} \PYG{n+nn}{PySparkAudit} \PYG{k+kn}{import} \PYG{n}{dataset\PYGZus{}summary}\PYG{p}{,} \PYG{n}{rates}
-\PYG{k+kn}{from} \PYG{n+nn}{PySparkAudit} \PYG{k+kn}{import} \PYG{n}{trend\PYGZus{}plot}\PYG{p}{,} \PYG{n}{auditing}
-\PYG{c+c1}{\PYGZsh{} path = \PYGZsq{}/home/feng/Desktop\PYGZsq{}}
-
-
-\PYG{n}{data} \PYG{o}{=} \PYG{n}{spark}\PYG{o}{.}\PYG{n}{read}\PYG{o}{.}\PYG{n}{csv}\PYG{p}{(}\PYG{n}{path}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{Heart.csv}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}
-                      \PYG{n}{sep}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{encoding}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{UTF\PYGZhy{}8}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{comment}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{header}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{inferSchema}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
-
+\PYG{c+c1}{\PYGZsh{} auditing in one function }
 \PYG{k}{print}\PYG{p}{(}\PYG{n}{auditing}\PYG{p}{(}\PYG{n}{data}\PYG{p}{,} \PYG{n}{display}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}\PYG{p}{)}
 \end{sphinxVerbatim}
 
