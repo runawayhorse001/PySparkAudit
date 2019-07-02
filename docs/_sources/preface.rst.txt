@@ -17,11 +17,13 @@ About
 About this API
 --------------
 
-This document is the |api| book for our PySparkAudit: PySpark Data Audit Library [PyAudit]_ API. The PDF version can be downloaded from `HERE <PySparkAudit.pdf>`_. **You may download and distribute it. Please be aware, however, that the note contains typos as well as inaccurate or incorrect description.** 
+This document is the |api| book for our **PySparkAudit**: PySpark Data Audit Library [PySparkAudit]_ API. The PDF version can be downloaded from `HERE <PySparkAudit.pdf>`_. **You may download and distribute it. Please be aware, however, that the note contains typos as well as inaccurate or incorrect description.** 
 
 The |api| assumes that the reader has a preliminary knowledge of ``python`` programing and ``Linux``. And this document is generated automatically by using `sphinx`_.
 
-.. _sphinx: http://sphinx.pocoo.org
+The python version **PyAudit**: Python Data Audit Library API can be found at [PyAudit]_.
+
+
 
 About the author
 ----------------
@@ -62,3 +64,5 @@ Feedback and suggestions
 ++++++++++++++++++++++++
 Your comments and suggestions are highly appreciated. I am more than happy to receive 
 corrections, suggestions or feedbacks through email (Wenqiang Feng: von198@gmail.com and Yiming Xu: yimingxu@g.harvard.edu) for improvements. 
+
+.. _sphinx: http://sphinx.pocoo.org

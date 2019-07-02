@@ -38,7 +38,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="5. Main Reference" href="reference.html" />
-    <link rel="prev" title="3. Python Data Audit Functions" href="basics.html" /> 
+    <link rel="prev" title="3. PySpark Data Audit Functions" href="basics.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -85,10 +85,15 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="preface.html">1. Preface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">2. How to Install</a></li>
-<li class="toctree-l1"><a class="reference internal" href="basics.html">3. Python Data Audit Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">3. PySpark Data Audit Functions</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">4. Auditing Demos</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#auditing-in-one-function">4.1. Auditing in one function</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#auditing-function-by-function">4.2. Auditing function by function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#auditing-function-by-function">4.1. Auditing function by function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#auditing-in-one-function">4.2. Auditing in one function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">4.3. Auditing function by function</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#print-in-bash">4.3.1. print in bash</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#audited-results-folder">4.3.2. Audited results folder</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="reference.html">5. Main Reference</a></li>
@@ -156,52 +161,74 @@
             
   <div class="section" id="auditing-demos">
 <span id="demo"></span><h1>4. Auditing Demos<a class="headerlink" href="#auditing-demos" title="Permalink to this headline">¶</a></h1>
-<p>The following demos are designed to show how to use <code class="docutils literal notranslate"><span class="pre">PyAudit</span></code> to aduit <code class="docutils literal notranslate"><span class="pre">pd.DataFrame</span></code>.</p>
-<div class="section" id="auditing-in-one-function">
-<h2>4.1. Auditing in one function<a class="headerlink" href="#auditing-in-one-function" title="Permalink to this headline">¶</a></h2>
+<p>The following demos are designed to show how to use <code class="docutils literal notranslate"><span class="pre">PySparkAudit</span></code> to aduit rdd <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>.</p>
+<div class="section" id="auditing-function-by-function">
+<h2>4.1. Auditing function by function<a class="headerlink" href="#auditing-function-by-function" title="Permalink to this headline">¶</a></h2>
 <p>For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span> \
+    <span class="o">.</span><span class="n">builder</span> \
+    <span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;Python Spark regression example&quot;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">&quot;spark.some.config.option&quot;</span><span class="p">,</span> <span class="s2">&quot;some-value&quot;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+
+
+<span class="c1"># import PySpark Audit functions</span>
+<span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="kn">import</span> <span class="n">data_types</span><span class="p">,</span> <span class="n">hist_plot</span><span class="p">,</span> <span class="n">bar_plot</span><span class="p">,</span> <span class="n">freq_items</span><span class="p">,</span><span class="n">feature_len</span>
+<span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="kn">import</span> <span class="n">dataset_summary</span><span class="p">,</span> <span class="n">rates</span>
+<span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="kn">import</span> <span class="n">trend_plot</span><span class="p">,</span> <span class="n">auditing</span>
+
+<span class="c1"># load dataset</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s1">&#39;Heart.csv&#39;</span><span class="p">,</span>
+                      <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">inferSchema</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># audit function by function</span>
+
+<span class="c1"># data types</span>
+<span class="k">print</span><span class="p">(</span><span class="n">data_types</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+
+<span class="c1"># check frequent items</span>
+<span class="k">print</span><span class="p">(</span><span class="n">freq_items</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+
+<span class="c1"># bar plot for categorical features</span>
+<span class="n">bar_plot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span>  <span class="n">display</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>Result:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>   Age    Sex     ChestPain  RestBP  Chol  ...  Oldpeak  Slope   Ca        Thal  AHD
-<span class="m">0</span>   <span class="m">63</span>   True       typical     <span class="m">145</span>   <span class="m">233</span>  ...      <span class="m">2</span>.3      <span class="m">3</span>  <span class="m">0</span>.0       fixed   No
-<span class="m">1</span>   <span class="m">67</span>   True  asymptomatic     <span class="m">160</span>   <span class="m">286</span>  ...      <span class="m">1</span>.5      <span class="m">2</span>  <span class="m">3</span>.0      normal  Yes
-<span class="m">2</span>   <span class="m">67</span>   True  asymptomatic     <span class="m">120</span>   <span class="m">229</span>  ...      <span class="m">2</span>.6      <span class="m">2</span>  <span class="m">2</span>.0  reversable  Yes
-<span class="m">3</span>   <span class="m">37</span>   True    nonanginal     <span class="m">130</span>   <span class="m">250</span>  ...      <span class="m">3</span>.5      <span class="m">3</span>  <span class="m">0</span>.0      normal   No
-<span class="m">4</span>   <span class="m">41</span>  False    nontypical     <span class="m">130</span>   <span class="m">204</span>  ...      <span class="m">1</span>.4      <span class="m">1</span>  <span class="m">0</span>.0      normal   No
-
-<span class="o">[</span><span class="m">5</span> rows x <span class="m">14</span> columns<span class="o">]</span>
-         feature data_type  min_digits  ...  zero_rate  pos_rate  neg_rate
-Age          Age     int64           <span class="m">4</span>  ...   <span class="m">0</span>.000000  <span class="m">1</span>.000000       <span class="m">0</span>.0
-RestBP    RestBP     int64           <span class="m">4</span>  ...   <span class="m">0</span>.000000  <span class="m">1</span>.000000       <span class="m">0</span>.0
-Chol        Chol     int64           <span class="m">5</span>  ...   <span class="m">0</span>.000000  <span class="m">1</span>.000000       <span class="m">0</span>.0
-Fbs          Fbs     int64           <span class="m">3</span>  ...   <span class="m">0</span>.851485  <span class="m">0</span>.148515       <span class="m">0</span>.0
-RestECG  RestECG     int64           <span class="m">3</span>  ...   <span class="m">0</span>.498350  <span class="m">0</span>.501650       <span class="m">0</span>.0
-MaxHR      MaxHR     int64           <span class="m">4</span>  ...   <span class="m">0</span>.000000  <span class="m">1</span>.000000       <span class="m">0</span>.0
-ExAng      ExAng     int64           <span class="m">3</span>  ...   <span class="m">0</span>.673267  <span class="m">0</span>.326733       <span class="m">0</span>.0
-Oldpeak  Oldpeak   float64           <span class="m">3</span>  ...   <span class="m">0</span>.326733  <span class="m">0</span>.673267       <span class="m">0</span>.0
-Slope      Slope     int64           <span class="m">3</span>  ...   <span class="m">0</span>.000000  <span class="m">1</span>.000000       <span class="m">0</span>.0
-Ca            Ca   float64           <span class="m">3</span>  ...   <span class="m">0</span>.588629  <span class="m">0</span>.411371       <span class="m">0</span>.0
-
-<span class="o">[</span><span class="m">10</span> rows x <span class="m">21</span> columns<span class="o">]</span>
-             feature data_type  ...          top_freqs  missing_rate
-Sex              Sex      bool  ...          <span class="o">[</span><span class="m">206</span>, <span class="m">97</span><span class="o">]</span>      <span class="m">0</span>.000000
-ChestPain  ChestPain    object  ...  <span class="o">[</span><span class="m">144</span>, <span class="m">86</span>, <span class="m">50</span>, <span class="m">23</span><span class="o">]</span>      <span class="m">0</span>.000000
-Thal            Thal    object  ...     <span class="o">[</span><span class="m">166</span>, <span class="m">117</span>, <span class="m">18</span><span class="o">]</span>      <span class="m">0</span>.006601
-AHD              AHD    object  ...         <span class="o">[</span><span class="m">164</span>, <span class="m">139</span><span class="o">]</span>      <span class="m">0</span>.000000
-
-<span class="o">[</span><span class="m">4</span> rows x <span class="m">10</span> columns<span class="o">]</span>
-              Age    RestBP      Chol  ...   Oldpeak     Slope        Ca
-Age      <span class="m">1</span>.000000  <span class="m">0</span>.284946  <span class="m">0</span>.208950  ...  <span class="m">0</span>.203805  <span class="m">0</span>.161770  <span class="m">0</span>.362605
-RestBP   <span class="m">0</span>.284946  <span class="m">1</span>.000000  <span class="m">0</span>.130120  ...  <span class="m">0</span>.189171  <span class="m">0</span>.117382  <span class="m">0</span>.098773
-Chol     <span class="m">0</span>.208950  <span class="m">0</span>.130120  <span class="m">1</span>.000000  ...  <span class="m">0</span>.046564 -0.004062  <span class="m">0</span>.119000
-Fbs      <span class="m">0</span>.118530  <span class="m">0</span>.175340  <span class="m">0</span>.009841  ...  <span class="m">0</span>.005747  <span class="m">0</span>.059894  <span class="m">0</span>.145478
-RestECG  <span class="m">0</span>.148868  <span class="m">0</span>.146560  <span class="m">0</span>.171043  ...  <span class="m">0</span>.114133  <span class="m">0</span>.133946  <span class="m">0</span>.128343
-MaxHR   -0.393806 -0.045351 -0.003432  ... -0.343085 -0.385601 -0.264246
-ExAng    <span class="m">0</span>.091661  <span class="m">0</span>.064762  <span class="m">0</span>.061310  ...  <span class="m">0</span>.288223  <span class="m">0</span>.257748  <span class="m">0</span>.145570
-Oldpeak  <span class="m">0</span>.203805  <span class="m">0</span>.189171  <span class="m">0</span>.046564  ...  <span class="m">1</span>.000000  <span class="m">0</span>.577537  <span class="m">0</span>.295832
-Slope    <span class="m">0</span>.161770  <span class="m">0</span>.117382 -0.004062  ...  <span class="m">0</span>.577537  <span class="m">1</span>.000000  <span class="m">0</span>.110119
-Ca       <span class="m">0</span>.362605  <span class="m">0</span>.098773  <span class="m">0</span>.119000  ...  <span class="m">0</span>.295832  <span class="m">0</span>.110119  <span class="m">1</span>.000000
-
-<span class="o">[</span><span class="m">10</span> rows x <span class="m">10</span> columns<span class="o">]</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>      feature  dtypes
+<span class="m">0</span>         Age     int
+<span class="m">1</span>         Sex     int
+<span class="m">2</span>   ChestPain  string
+<span class="m">3</span>      RestBP     int
+<span class="m">4</span>        Chol     int
+<span class="m">5</span>         Fbs     int
+<span class="m">6</span>     RestECG     int
+<span class="m">7</span>       MaxHR     int
+<span class="m">8</span>       ExAng     int
+<span class="m">9</span>     Oldpeak  double
+<span class="m">10</span>      Slope     int
+<span class="m">11</span>         Ca  string
+<span class="m">12</span>       Thal  string
+<span class="m">13</span>        AHD  string
+      feature                            freq_items<span class="o">[</span>value, freq<span class="o">]</span>
+<span class="m">0</span>         Age  <span class="o">[[</span><span class="m">58</span>, <span class="m">19</span><span class="o">]</span>, <span class="o">[</span><span class="m">57</span>, <span class="m">17</span><span class="o">]</span>, <span class="o">[</span><span class="m">54</span>, <span class="m">16</span><span class="o">]</span>, <span class="o">[</span><span class="m">59</span>, <span class="m">14</span><span class="o">]</span>, <span class="o">[</span><span class="m">52</span>, ...
+<span class="m">1</span>         Sex                                <span class="o">[[</span><span class="m">1</span>, <span class="m">206</span><span class="o">]</span>, <span class="o">[</span><span class="m">0</span>, <span class="m">97</span><span class="o">]]</span>
+<span class="m">2</span>   ChestPain  <span class="o">[[</span>asymptomatic, <span class="m">144</span><span class="o">]</span>, <span class="o">[</span>nonanginal, <span class="m">86</span><span class="o">]</span>, <span class="o">[</span>nonty...
+<span class="m">3</span>      RestBP  <span class="o">[[</span><span class="m">120</span>, <span class="m">37</span><span class="o">]</span>, <span class="o">[</span><span class="m">130</span>, <span class="m">36</span><span class="o">]</span>, <span class="o">[</span><span class="m">140</span>, <span class="m">32</span><span class="o">]</span>, <span class="o">[</span><span class="m">110</span>, <span class="m">19</span><span class="o">]</span>, <span class="o">[</span>...
+<span class="m">4</span>        Chol  <span class="o">[[</span><span class="m">197</span>, <span class="m">6</span><span class="o">]</span>, <span class="o">[</span><span class="m">234</span>, <span class="m">6</span><span class="o">]</span>, <span class="o">[</span><span class="m">204</span>, <span class="m">6</span><span class="o">]</span>, <span class="o">[</span><span class="m">254</span>, <span class="m">5</span><span class="o">]</span>, <span class="o">[</span><span class="m">212</span>,...
+<span class="m">5</span>         Fbs                                <span class="o">[[</span><span class="m">0</span>, <span class="m">258</span><span class="o">]</span>, <span class="o">[</span><span class="m">1</span>, <span class="m">45</span><span class="o">]]</span>
+<span class="m">6</span>     RestECG                       <span class="o">[[</span><span class="m">0</span>, <span class="m">151</span><span class="o">]</span>, <span class="o">[</span><span class="m">2</span>, <span class="m">148</span><span class="o">]</span>, <span class="o">[</span><span class="m">1</span>, <span class="m">4</span><span class="o">]]</span>
+<span class="m">7</span>       MaxHR  <span class="o">[[</span><span class="m">162</span>, <span class="m">11</span><span class="o">]</span>, <span class="o">[</span><span class="m">163</span>, <span class="m">9</span><span class="o">]</span>, <span class="o">[</span><span class="m">160</span>, <span class="m">9</span><span class="o">]</span>, <span class="o">[</span><span class="m">152</span>, <span class="m">8</span><span class="o">]</span>, <span class="o">[</span><span class="m">132</span>...
+<span class="m">8</span>       ExAng                                <span class="o">[[</span><span class="m">0</span>, <span class="m">204</span><span class="o">]</span>, <span class="o">[</span><span class="m">1</span>, <span class="m">99</span><span class="o">]]</span>
+<span class="m">9</span>     Oldpeak  <span class="o">[[</span><span class="m">0</span>.0, <span class="m">99</span><span class="o">]</span>, <span class="o">[</span><span class="m">1</span>.2, <span class="m">17</span><span class="o">]</span>, <span class="o">[</span><span class="m">0</span>.6, <span class="m">14</span><span class="o">]</span>, <span class="o">[</span><span class="m">1</span>.0, <span class="m">14</span><span class="o">]</span>, <span class="o">[</span>...
+<span class="m">10</span>      Slope                      <span class="o">[[</span><span class="m">1</span>, <span class="m">142</span><span class="o">]</span>, <span class="o">[</span><span class="m">2</span>, <span class="m">140</span><span class="o">]</span>, <span class="o">[</span><span class="m">3</span>, <span class="m">21</span><span class="o">]]</span>
+<span class="m">11</span>         Ca     <span class="o">[[</span><span class="m">0</span>, <span class="m">176</span><span class="o">]</span>, <span class="o">[</span><span class="m">1</span>, <span class="m">65</span><span class="o">]</span>, <span class="o">[</span><span class="m">2</span>, <span class="m">38</span><span class="o">]</span>, <span class="o">[</span><span class="m">3</span>, <span class="m">20</span><span class="o">]</span>, <span class="o">[</span>NA, <span class="m">4</span><span class="o">]]</span>
+<span class="m">12</span>       Thal  <span class="o">[[</span>normal, <span class="m">166</span><span class="o">]</span>, <span class="o">[</span>reversable, <span class="m">117</span><span class="o">]</span>, <span class="o">[</span>fixed, <span class="m">18</span><span class="o">]</span>...
+<span class="m">13</span>        AHD                            <span class="o">[[</span>No, <span class="m">164</span><span class="o">]</span>, <span class="o">[</span>Yes, <span class="m">139</span><span class="o">]]</span>
+<span class="o">================================================================</span>
+The Bar plot Bar_plots.pdf was located at:
+/home/feng/Dropbox/MyTutorial/PySparkAudit/test/Audited
 
 Process finished with <span class="nb">exit</span> code <span class="m">0</span>
 </pre></div>
@@ -209,13 +236,34 @@ Process finished with <span class="nb">exit</span> code <span class="m">0</span>
 <p>and</p>
 <blockquote>
 <div><div class="figure align-center">
-<img alt="_images/results.png" src="_images/results.png" />
+<img alt="_images/bars.png" src="_images/bars.png" />
 </div>
 </div></blockquote>
 </div>
-<div class="section" id="auditing-function-by-function">
-<h2>4.2. Auditing function by function<a class="headerlink" href="#auditing-function-by-function" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="auditing-in-one-function">
+<h2>4.2. Auditing in one function<a class="headerlink" href="#auditing-in-one-function" title="Permalink to this headline">¶</a></h2>
 <p>For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span> \
+    <span class="o">.</span><span class="n">builder</span> \
+    <span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;Python Spark regression example&quot;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">&quot;spark.some.config.option&quot;</span><span class="p">,</span> <span class="s2">&quot;some-value&quot;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+
+
+<span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="kn">import</span> <span class="n">dtypes_class</span><span class="p">,</span> <span class="n">hist_plot</span><span class="p">,</span> <span class="n">bar_plot</span><span class="p">,</span> <span class="n">freq_items</span><span class="p">,</span><span class="n">feature_len</span>
+<span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="kn">import</span> <span class="n">dataset_summary</span><span class="p">,</span> <span class="n">rates</span>
+<span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="kn">import</span> <span class="n">trend_plot</span><span class="p">,</span> <span class="n">auditing</span>
+<span class="c1"># path = &#39;/home/feng/Desktop&#39;</span>
+
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s1">&#39;Heart.csv&#39;</span><span class="p">,</span>
+                      <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">inferSchema</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">auditing</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
+</pre></div>
+</div>
 <p>Result:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>   Age    Sex     ChestPain  RestBP  Chol  ...  Oldpeak  Slope   Ca        Thal  AHD
 <span class="m">0</span>   <span class="m">63</span>   True       typical     <span class="m">145</span>   <span class="m">233</span>  ...      <span class="m">2</span>.3      <span class="m">3</span>  <span class="m">0</span>.0       fixed   No
@@ -265,10 +313,140 @@ Process finished with <span class="nb">exit</span> code <span class="m">0</span>
 <p>and</p>
 <blockquote>
 <div><div class="figure align-center">
-<img alt="_images/output.png" src="_images/output.png" />
+<img alt="_images/bars.png" src="_images/bars.png" />
 </div>
-<div class="figure align-center">
-<img alt="_images/results.png" src="_images/results.png" />
+</div></blockquote>
+</div>
+<div class="section" id="id1">
+<h2>4.3. Auditing function by function<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span> \
+    <span class="o">.</span><span class="n">builder</span> \
+    <span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;Python Spark regression example&quot;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">&quot;spark.some.config.option&quot;</span><span class="p">,</span> <span class="s2">&quot;some-value&quot;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+
+
+<span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="kn">import</span> <span class="n">dtypes_class</span><span class="p">,</span> <span class="n">hist_plot</span><span class="p">,</span> <span class="n">bar_plot</span><span class="p">,</span> <span class="n">freq_items</span><span class="p">,</span><span class="n">feature_len</span>
+<span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="kn">import</span> <span class="n">dataset_summary</span><span class="p">,</span> <span class="n">rates</span>
+<span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="kn">import</span> <span class="n">trend_plot</span><span class="p">,</span> <span class="n">auditing</span>
+<span class="c1"># path = &#39;/home/feng/Desktop&#39;</span>
+
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s1">&#39;Heart.csv&#39;</span><span class="p">,</span>
+                      <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">inferSchema</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">auditing</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Result:</p>
+<div class="section" id="print-in-bash">
+<h3>4.3.1. print in bash<a class="headerlink" href="#print-in-bash" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">================================================================</span>
+The audited results summary audited_results.xlsx was located at:
+/home/feng/Dropbox/MyTutorial/PySparkAudit/test/Audited
+<span class="o">================================================================</span>
+The correlation matrix plot Corr.png was located at:
+/home/feng/Dropbox/MyTutorial/PySparkAudit/test/Audited
+<span class="o">================================================================</span>
+The Histograms plot Histograms.pdf was located at:
+/home/feng/Dropbox/MyTutorial/PySparkAudit/test/Audited
+Histograms plots are <span class="k">done</span>!
+<span class="o">================================================================</span>
+The Bar plot Bar_plots.pdf was located at:
+/home/feng/Dropbox/MyTutorial/PySparkAudit/test/Audited
+Caution: no date features in the dataset!!!
+Generate all audited results <span class="nv">took</span> <span class="o">=</span> <span class="m">29</span>.093122243881226 <span class="nv">s</span>
+<span class="o">================================================================</span>
+The auditing processes are DONE!!!
+<span class="o">(</span>   feature  dtypes  row_count    ...     rate_neg  rate_zero  rate_pos
+<span class="m">0</span>      Age     int        <span class="m">303</span>    ...          <span class="m">0</span>.0   <span class="m">0</span>.000000  <span class="m">1</span>.000000
+<span class="m">1</span>      Sex     int        <span class="m">303</span>    ...          <span class="m">0</span>.0   <span class="m">0</span>.320132  <span class="m">0</span>.679868
+<span class="m">2</span>   RestBP     int        <span class="m">303</span>    ...          <span class="m">0</span>.0   <span class="m">0</span>.000000  <span class="m">1</span>.000000
+<span class="m">3</span>     Chol     int        <span class="m">303</span>    ...          <span class="m">0</span>.0   <span class="m">0</span>.000000  <span class="m">1</span>.000000
+<span class="m">4</span>      Fbs     int        <span class="m">303</span>    ...          <span class="m">0</span>.0   <span class="m">0</span>.851485  <span class="m">0</span>.148515
+<span class="m">5</span>  RestECG     int        <span class="m">303</span>    ...          <span class="m">0</span>.0   <span class="m">0</span>.498350  <span class="m">0</span>.501650
+<span class="m">6</span>    MaxHR     int        <span class="m">303</span>    ...          <span class="m">0</span>.0   <span class="m">0</span>.000000  <span class="m">1</span>.000000
+<span class="m">7</span>    ExAng     int        <span class="m">303</span>    ...          <span class="m">0</span>.0   <span class="m">0</span>.673267  <span class="m">0</span>.326733
+<span class="m">8</span>  Oldpeak  double        <span class="m">303</span>    ...          <span class="m">0</span>.0   <span class="m">0</span>.326733  <span class="m">0</span>.673267
+<span class="m">9</span>    Slope     int        <span class="m">303</span>    ...          <span class="m">0</span>.0   <span class="m">0</span>.000000  <span class="m">1</span>.000000
+
+<span class="o">[</span><span class="m">10</span> rows x <span class="m">22</span> columns<span class="o">]</span>,      feature  dtypes     ...      rate_null  rate_empty
+<span class="m">0</span>  ChestPain  string     ...            <span class="m">0</span>.0         <span class="m">0</span>.0
+<span class="m">1</span>         Ca  string     ...            <span class="m">0</span>.0         <span class="m">0</span>.0
+<span class="m">2</span>       Thal  string     ...            <span class="m">0</span>.0         <span class="m">0</span>.0
+<span class="m">3</span>        AHD  string     ...            <span class="m">0</span>.0         <span class="m">0</span>.0
+
+<span class="o">[</span><span class="m">4</span> rows x <span class="m">12</span> columns<span class="o">]</span>,               Age       Sex    RestBP    ...        ExAng   Oldpeak     Slope
+Age      <span class="m">1</span>.000000 -0.097542  <span class="m">0</span>.284946    ...     <span class="m">0</span>.091661  <span class="m">0</span>.203805  <span class="m">0</span>.161770
+Sex     -0.097542  <span class="m">1</span>.000000 -0.064456    ...     <span class="m">0</span>.146201  <span class="m">0</span>.102173  <span class="m">0</span>.037533
+RestBP   <span class="m">0</span>.284946 -0.064456  <span class="m">1</span>.000000    ...     <span class="m">0</span>.064762  <span class="m">0</span>.189171  <span class="m">0</span>.117382
+Chol     <span class="m">0</span>.208950 -0.199915  <span class="m">0</span>.130120    ...     <span class="m">0</span>.061310  <span class="m">0</span>.046564 -0.004062
+Fbs      <span class="m">0</span>.118530  <span class="m">0</span>.047862  <span class="m">0</span>.175340    ...     <span class="m">0</span>.025665  <span class="m">0</span>.005747  <span class="m">0</span>.059894
+RestECG  <span class="m">0</span>.148868  <span class="m">0</span>.021647  <span class="m">0</span>.146560    ...     <span class="m">0</span>.084867  <span class="m">0</span>.114133  <span class="m">0</span>.133946
+MaxHR   -0.393806 -0.048663 -0.045351    ...    -0.378103 -0.343085 -0.385601
+ExAng    <span class="m">0</span>.091661  <span class="m">0</span>.146201  <span class="m">0</span>.064762    ...     <span class="m">1</span>.000000  <span class="m">0</span>.288223  <span class="m">0</span>.257748
+Oldpeak  <span class="m">0</span>.203805  <span class="m">0</span>.102173  <span class="m">0</span>.189171    ...     <span class="m">0</span>.288223  <span class="m">1</span>.000000  <span class="m">0</span>.577537
+Slope    <span class="m">0</span>.161770  <span class="m">0</span>.037533  <span class="m">0</span>.117382    ...     <span class="m">0</span>.257748  <span class="m">0</span>.577537  <span class="m">1</span>.000000
+
+<span class="o">[</span><span class="m">10</span> rows x <span class="m">10</span> columns<span class="o">])</span>
+
+Process finished with <span class="nb">exit</span> code <span class="m">0</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="audited-results-folder">
+<h3>4.3.2. Audited results folder<a class="headerlink" href="#audited-results-folder" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="_images/t_folder.png" src="_images/t_folder.png" />
+</div>
+</div></blockquote>
+<p>The files in <code class="docutils literal notranslate"><span class="pre">00-audited_results.xlsx</span></code>:</p>
+<ol class="arabic simple">
+<li>Dataset_summary</li>
+</ol>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="_images/t_excel1.png" src="_images/t_excel1.png" />
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li>Numeric_summary</li>
+</ol>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="_images/t_excel2.png" src="_images/t_excel2.png" />
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li>Category_summary</li>
+</ol>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="_images/t_excel3.png" src="_images/t_excel3.png" />
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="4">
+<li>Correlation_matrix</li>
+</ol>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="_images/t_excel4.png" src="_images/t_excel4.png" />
+</div>
+</div></blockquote>
+<p>Histograms in <code class="docutils literal notranslate"><span class="pre">Histograms.pdf</span></code></p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="_images/hists.png" src="_images/hists.png" />
+</div>
+</div></blockquote>
+<p>Barplots in <code class="docutils literal notranslate"><span class="pre">Bar_plots.pdf</span></code></p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="_images/bars.png" src="_images/bars.png" />
 </div>
 </div></blockquote>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>       .,,.
@@ -293,6 +471,7 @@ Process finished with <span class="nb">exit</span> code <span class="m">0</span>
 </div>
 </div>
 </div>
+</div>
 
 
            </div>
@@ -305,7 +484,7 @@ Process finished with <span class="nb">exit</span> code <span class="m">0</span>
         <a href="reference.html" class="btn btn-neutral float-right" title="5. Main Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="basics.html" class="btn btn-neutral float-left" title="3. Python Data Audit Functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="basics.html" class="btn btn-neutral float-left" title="3. PySpark Data Audit Functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -316,7 +495,7 @@ Process finished with <span class="nb">exit</span> code <span class="m">0</span>
     <p>
         &copy; Copyright 2019, Wenqiang Feng and Yiming Xu
       <span class="lastupdated">
-        Last updated on Jun 26, 2019.
+        Last updated on Jul 01, 2019.
       </span>
 
     </p>

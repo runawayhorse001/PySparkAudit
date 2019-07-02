@@ -9,73 +9,65 @@
 Auditing Demos 
 ==============
 
-The following demos are designed to show how to use ``PyAudit`` to aduit ``pd.DataFrame``. 
+The following demos are designed to show how to use ``PySparkAudit`` to aduit rdd ``DataFrame``. 
 
-Auditing in one function 
-++++++++++++++++++++++++
+
+Auditing function by function  
++++++++++++++++++++++++++++++
 
 |eg|
 
 .. literalinclude:: ../test/demo1.py
      :language: python
 
-
 |re|
 
 .. code-block:: bash
 
-	   Age    Sex     ChestPain  RestBP  Chol  ...  Oldpeak  Slope   Ca        Thal  AHD
-	0   63   True       typical     145   233  ...      2.3      3  0.0       fixed   No
-	1   67   True  asymptomatic     160   286  ...      1.5      2  3.0      normal  Yes
-	2   67   True  asymptomatic     120   229  ...      2.6      2  2.0  reversable  Yes
-	3   37   True    nonanginal     130   250  ...      3.5      3  0.0      normal   No
-	4   41  False    nontypical     130   204  ...      1.4      1  0.0      normal   No
 
-	[5 rows x 14 columns]
-	         feature data_type  min_digits  ...  zero_rate  pos_rate  neg_rate
-	Age          Age     int64           4  ...   0.000000  1.000000       0.0
-	RestBP    RestBP     int64           4  ...   0.000000  1.000000       0.0
-	Chol        Chol     int64           5  ...   0.000000  1.000000       0.0
-	Fbs          Fbs     int64           3  ...   0.851485  0.148515       0.0
-	RestECG  RestECG     int64           3  ...   0.498350  0.501650       0.0
-	MaxHR      MaxHR     int64           4  ...   0.000000  1.000000       0.0
-	ExAng      ExAng     int64           3  ...   0.673267  0.326733       0.0
-	Oldpeak  Oldpeak   float64           3  ...   0.326733  0.673267       0.0
-	Slope      Slope     int64           3  ...   0.000000  1.000000       0.0
-	Ca            Ca   float64           3  ...   0.588629  0.411371       0.0
-
-	[10 rows x 21 columns]
-	             feature data_type  ...          top_freqs  missing_rate
-	Sex              Sex      bool  ...          [206, 97]      0.000000
-	ChestPain  ChestPain    object  ...  [144, 86, 50, 23]      0.000000
-	Thal            Thal    object  ...     [166, 117, 18]      0.006601
-	AHD              AHD    object  ...         [164, 139]      0.000000
-
-	[4 rows x 10 columns]
-	              Age    RestBP      Chol  ...   Oldpeak     Slope        Ca
-	Age      1.000000  0.284946  0.208950  ...  0.203805  0.161770  0.362605
-	RestBP   0.284946  1.000000  0.130120  ...  0.189171  0.117382  0.098773
-	Chol     0.208950  0.130120  1.000000  ...  0.046564 -0.004062  0.119000
-	Fbs      0.118530  0.175340  0.009841  ...  0.005747  0.059894  0.145478
-	RestECG  0.148868  0.146560  0.171043  ...  0.114133  0.133946  0.128343
-	MaxHR   -0.393806 -0.045351 -0.003432  ... -0.343085 -0.385601 -0.264246
-	ExAng    0.091661  0.064762  0.061310  ...  0.288223  0.257748  0.145570
-	Oldpeak  0.203805  0.189171  0.046564  ...  1.000000  0.577537  0.295832
-	Slope    0.161770  0.117382 -0.004062  ...  0.577537  1.000000  0.110119
-	Ca       0.362605  0.098773  0.119000  ...  0.295832  0.110119  1.000000
-
-	[10 rows x 10 columns]
+	      feature  dtypes
+	0         Age     int
+	1         Sex     int
+	2   ChestPain  string
+	3      RestBP     int
+	4        Chol     int
+	5         Fbs     int
+	6     RestECG     int
+	7       MaxHR     int
+	8       ExAng     int
+	9     Oldpeak  double
+	10      Slope     int
+	11         Ca  string
+	12       Thal  string
+	13        AHD  string
+	      feature                            freq_items[value, freq]
+	0         Age  [[58, 19], [57, 17], [54, 16], [59, 14], [52, ...
+	1         Sex                                [[1, 206], [0, 97]]
+	2   ChestPain  [[asymptomatic, 144], [nonanginal, 86], [nonty...
+	3      RestBP  [[120, 37], [130, 36], [140, 32], [110, 19], [...
+	4        Chol  [[197, 6], [234, 6], [204, 6], [254, 5], [212,...
+	5         Fbs                                [[0, 258], [1, 45]]
+	6     RestECG                       [[0, 151], [2, 148], [1, 4]]
+	7       MaxHR  [[162, 11], [163, 9], [160, 9], [152, 8], [132...
+	8       ExAng                                [[0, 204], [1, 99]]
+	9     Oldpeak  [[0.0, 99], [1.2, 17], [0.6, 14], [1.0, 14], [...
+	10      Slope                      [[1, 142], [2, 140], [3, 21]]
+	11         Ca     [[0, 176], [1, 65], [2, 38], [3, 20], [NA, 4]]
+	12       Thal  [[normal, 166], [reversable, 117], [fixed, 18]...
+	13        AHD                            [[No, 164], [Yes, 139]]
+	================================================================
+	The Bar plot Bar_plots.pdf was located at:
+	/home/feng/Dropbox/MyTutorial/PySparkAudit/test/Audited
 
 	Process finished with exit code 0
 
 and 
 
-
-  .. figure:: images/results.png
+  .. figure:: images/bars.png
     :align: center   
 
-Auditing function by function 
-+++++++++++++++++++++++++++++
+Auditing in one function 
+++++++++++++++++++++++++
 
 |eg|
 
@@ -134,11 +126,114 @@ Auditing function by function
 and 
 
 
-  .. figure:: images/output.png
+  .. figure:: images/bars.png
+    :align: center   
+
+Auditing function by function 
++++++++++++++++++++++++++++++
+
+|eg|
+
+.. literalinclude:: ../test/demo2.py
+     :language: python
+
+
+|re|
+
+print in bash 
+-------------
+
+.. code-block:: bash
+
+	================================================================
+	The audited results summary audited_results.xlsx was located at:
+	/home/feng/Dropbox/MyTutorial/PySparkAudit/test/Audited
+	================================================================
+	The correlation matrix plot Corr.png was located at:
+	/home/feng/Dropbox/MyTutorial/PySparkAudit/test/Audited
+	================================================================
+	The Histograms plot Histograms.pdf was located at:
+	/home/feng/Dropbox/MyTutorial/PySparkAudit/test/Audited
+	Histograms plots are done!
+	================================================================
+	The Bar plot Bar_plots.pdf was located at:
+	/home/feng/Dropbox/MyTutorial/PySparkAudit/test/Audited
+	Caution: no date features in the dataset!!!
+	Generate all audited results took = 29.093122243881226 s
+	================================================================
+	The auditing processes are DONE!!!
+	(   feature  dtypes  row_count    ...     rate_neg  rate_zero  rate_pos
+	0      Age     int        303    ...          0.0   0.000000  1.000000
+	1      Sex     int        303    ...          0.0   0.320132  0.679868
+	2   RestBP     int        303    ...          0.0   0.000000  1.000000
+	3     Chol     int        303    ...          0.0   0.000000  1.000000
+	4      Fbs     int        303    ...          0.0   0.851485  0.148515
+	5  RestECG     int        303    ...          0.0   0.498350  0.501650
+	6    MaxHR     int        303    ...          0.0   0.000000  1.000000
+	7    ExAng     int        303    ...          0.0   0.673267  0.326733
+	8  Oldpeak  double        303    ...          0.0   0.326733  0.673267
+	9    Slope     int        303    ...          0.0   0.000000  1.000000
+
+	[10 rows x 22 columns],      feature  dtypes     ...      rate_null  rate_empty
+	0  ChestPain  string     ...            0.0         0.0
+	1         Ca  string     ...            0.0         0.0
+	2       Thal  string     ...            0.0         0.0
+	3        AHD  string     ...            0.0         0.0
+
+	[4 rows x 12 columns],               Age       Sex    RestBP    ...        ExAng   Oldpeak     Slope
+	Age      1.000000 -0.097542  0.284946    ...     0.091661  0.203805  0.161770
+	Sex     -0.097542  1.000000 -0.064456    ...     0.146201  0.102173  0.037533
+	RestBP   0.284946 -0.064456  1.000000    ...     0.064762  0.189171  0.117382
+	Chol     0.208950 -0.199915  0.130120    ...     0.061310  0.046564 -0.004062
+	Fbs      0.118530  0.047862  0.175340    ...     0.025665  0.005747  0.059894
+	RestECG  0.148868  0.021647  0.146560    ...     0.084867  0.114133  0.133946
+	MaxHR   -0.393806 -0.048663 -0.045351    ...    -0.378103 -0.343085 -0.385601
+	ExAng    0.091661  0.146201  0.064762    ...     1.000000  0.288223  0.257748
+	Oldpeak  0.203805  0.102173  0.189171    ...     0.288223  1.000000  0.577537
+	Slope    0.161770  0.037533  0.117382    ...     0.257748  0.577537  1.000000
+
+	[10 rows x 10 columns])
+
+	Process finished with exit code 0
+
+
+Audited results folder
+----------------------
+
+  .. figure:: images/t_folder.png
     :align: center
 
-  .. figure:: images/results.png
+The files in ``00-audited_results.xlsx``:
+
+1. Dataset_summary
+
+  .. figure:: images/t_excel1.png
     :align: center    
+
+2. Numeric_summary
+
+  .. figure:: images/t_excel2.png
+    :align: center  
+
+3. Category_summary
+
+  .. figure:: images/t_excel3.png
+    :align: center  
+
+4. Correlation_matrix
+
+  .. figure:: images/t_excel4.png
+    :align: center  
+
+Histograms in ``Histograms.pdf``
+
+  .. figure:: images/hists.png
+    :align: center  
+
+Barplots in ``Bar_plots.pdf``
+
+  .. figure:: images/bars.png
+    :align: center  
 
 
 .. code-block:: bash

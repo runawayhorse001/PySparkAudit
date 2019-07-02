@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>3. Python Data Audit Functions &mdash; PySparkAudit: PySpark Data Audit  documentation</title>
+  <title>3. PySpark Data Audit Functions &mdash; PySparkAudit: PySpark Data Audit  documentation</title>
   
 
   
@@ -85,24 +85,40 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="preface.html">1. Preface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">2. How to Install</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">3. Python Data Audit Functions</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3. PySpark Data Audit Functions</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#basic-functions">3.1. Basic Functions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#module-PyAudit.basics">3.1.1. dtypes_class</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#missing-rate">3.1.2. missing_rate</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#zero-rate">3.1.3. zero_rate</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#feature-variance">3.1.4. feature_variance</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#freq-items-df">3.1.5. freq_items_df</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#feature-len">3.1.6. feature_len</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#correlation-matrix">3.1.7. correlation matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mkdir">3.1.1. mkdir</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mkdir-clean">3.1.2. mkdir_clean</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#df-merge">3.1.3. df_merge</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-types">3.1.4. data_types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dtypes-class">3.1.5. dtypes_class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#counts">3.1.6. counts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#describe">3.1.7. describe</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#percentiles">3.1.8. percentiles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#feature-len">3.1.9. feature_len</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#freq-items">3.1.10. freq_items</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rates">3.1.11. rates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#corr-matrix">3.1.12. corr_matrix</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#summary-functions">3.2. Summary Functions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#numeric-summary">3.2.1. numeric_summary</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#category-summary">3.2.2. category_summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plot-functions">3.2. Plot Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#hist-plot">3.2.1. hist_plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bar-plot">3.2.2. bar_plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#trend-plot">3.2.3. trend_plot</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#auditing-function">3.3. Auditing Function</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#auditing">3.3.1. auditing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#summary-functions">3.3. Summary Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dataset-summary">3.3.1. dataset_summary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#numeric-summary">3.3.2. numeric_summary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#category-summary">3.3.3. category_summary</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#auditing-function">3.4. Auditing Function</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#auditing">3.4.1. auditing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#plotting-function">3.5. Plotting Function</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fig-plots">3.5.1. fig_plots</a></li>
 </ul>
 </li>
 </ul>
@@ -154,7 +170,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>3. Python Data Audit Functions</li>
+      <li>3. PySpark Data Audit Functions</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -171,364 +187,533 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="python-data-audit-functions">
-<span id="basics"></span><h1>3. Python Data Audit Functions<a class="headerlink" href="#python-data-audit-functions" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="pyspark-data-audit-functions">
+<span id="basics"></span><h1>3. PySpark Data Audit Functions<a class="headerlink" href="#pyspark-data-audit-functions" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="basic-functions">
 <h2>3.1. Basic Functions<a class="headerlink" href="#basic-functions" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="module-PyAudit.basics">
-<span id="dtypes-class"></span><h3>3.1.1. dtypes_class<a class="headerlink" href="#module-PyAudit.basics" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="mkdir">
+<h3>3.1.1. mkdir<a class="headerlink" href="#mkdir" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
-<dt id="PyAudit.basics.dtypes_class">
-<code class="descclassname">PyAudit.basics.</code><code class="descname">dtypes_class</code><span class="sig-paren">(</span><em>df_in</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/../../../anaconda3/lib/python3.7/site-packages/PyAudit/basics.py#L9-L44"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PyAudit.basics.dtypes_class" title="Permalink to this definition">¶</a></dt>
-<dd><p>numerical, categorical and bool name list in the DataFrame</p>
+<dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">mkdir</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L15-L24"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Make a new directory. if it’s exist, keep the old files.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>df_in</strong> – input pandas DataFrame</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">numerical, categorical and bool name list</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Wenqiang Feng and Ming Chen</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Email:</th><td class="field-body"><a class="reference external" href="mailto:von198&#37;&#52;&#48;gmail&#46;com">von198<span>&#64;</span>gmail<span>&#46;</span>com</a></td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – the directory path</td>
 </tr>
 </tbody>
 </table>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">PyAudit.basics</span> <span class="k">import</span> <span class="n">dtypes_class</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Heart.csv&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Sex&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">})</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">num_fields</span><span class="p">,</span> <span class="n">cat_fields</span><span class="p">,</span> <span class="n">bool_fields</span><span class="p">,</span> <span class="n">data_types</span><span class="p">,</span> <span class="n">type_class</span><span class="p">)</span> <span class="o">=</span> <span class="n">dtypes_class</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">num_fields</span>
-<span class="go">[&#39;Age&#39;, &#39;RestBP&#39;, &#39;Chol&#39;, &#39;Fbs&#39;, &#39;RestECG&#39;, &#39;MaxHR&#39;, &#39;ExAng&#39;, &#39;Oldpeak&#39;, &#39;Slope&#39;, &#39;Ca&#39;]</span>
-</pre></div>
-</div>
 </dd></dl>
 
 </div>
-<div class="section" id="missing-rate">
-<h3>3.1.2. missing_rate<a class="headerlink" href="#missing-rate" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="mkdir-clean">
+<h3>3.1.2. mkdir_clean<a class="headerlink" href="#mkdir-clean" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt>
-<code class="descclassname">PyAudit.basics.</code><code class="descname">missing_rate</code><span class="sig-paren">(</span><em>df_in</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/../../../anaconda3/lib/python3.7/site-packages/PyAudit/basics.py#L47-L75"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>calculate missing rate for each feature in the DataFrame</p>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">mkdir_clean</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L27-L41"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Make a new directory. if it’s exist, remove the old files.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>df_in</strong> – input pandas DataFrame</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">missing rate</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Wenqiang Feng and Ming Chen</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Email:</th><td class="field-body"><a class="reference external" href="mailto:von198&#37;&#52;&#48;gmail&#46;com">von198<span>&#64;</span>gmail<span>&#46;</span>com</a></td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – the directory path</td>
 </tr>
 </tbody>
 </table>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
-<span class="go">         &#39;B&#39;: [1, 0, 0, 0],</span>
-<span class="go">         &#39;C&#39;: [&#39;a&#39;, None, &#39;c&#39;, &#39;d&#39;]}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create DataFrame</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">PyAudit.basics</span> <span class="k">import</span> <span class="n">missing_rate</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">missing_rate</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-<span class="go">         feature  missing_rate</span>
-<span class="go">       0       A          0.25</span>
-<span class="go">       1       B          0.00</span>
-<span class="go">       2       C          0.25</span>
-</pre></div>
-</div>
 </dd></dl>
 
 </div>
-<div class="section" id="zero-rate">
-<h3>3.1.3. zero_rate<a class="headerlink" href="#zero-rate" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="df-merge">
+<h3>3.1.3. df_merge<a class="headerlink" href="#df-merge" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt>
-<code class="descclassname">PyAudit.basics.</code><code class="descname">zero_rate</code><span class="sig-paren">(</span><em>df_in</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/../../../anaconda3/lib/python3.7/site-packages/PyAudit/basics.py#L78-L106"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>calculate the percentage of 0 value for each feature in the DataFrame</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>df_in</strong> – input pandas DataFrame</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">zero rate</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Wenqiang Feng and Ming Chen</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Email:</th><td class="field-body"><a class="reference external" href="mailto:von198&#37;&#52;&#48;gmail&#46;com">von198<span>&#64;</span>gmail<span>&#46;</span>com</a></td>
-</tr>
-</tbody>
-</table>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
-<span class="go">         &#39;B&#39;: [1, 0, 0, 0],</span>
-<span class="go">         &#39;C&#39;: [&#39;a&#39;, None, &#39;c&#39;, &#39;d&#39;]}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create DataFrame</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">PyAudit.basics</span> <span class="k">import</span> <span class="n">zero_rate</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">zero_rate</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-<span class="go">         feature  zero_rate</span>
-<span class="go">       0       A   0.333333</span>
-<span class="go">       1       B   0.750000</span>
-<span class="go">       2       C   0.000000</span>
-</pre></div>
-</div>
-</dd></dl>
-
-</div>
-<div class="section" id="feature-variance">
-<h3>3.1.4. feature_variance<a class="headerlink" href="#feature-variance" title="Permalink to this headline">¶</a></h3>
-<dl class="function">
-<dt>
-<code class="descclassname">PyAudit.basics.</code><code class="descname">feature_variance</code><span class="sig-paren">(</span><em>df_in</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/../../../anaconda3/lib/python3.7/site-packages/PyAudit/basics.py#L109-L137"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>calculate the variance for each feature</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>df_in</strong> – input pandas DataFrame</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">feature variance</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Wenqiang Feng and Ming Chen</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Email:</th><td class="field-body"><a class="reference external" href="mailto:von198&#37;&#52;&#48;gmail&#46;com">von198<span>&#64;</span>gmail<span>&#46;</span>com</a></td>
-</tr>
-</tbody>
-</table>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
-<span class="go">         &#39;B&#39;: [1, 0, 0, 0],</span>
-<span class="go">         &#39;C&#39;: [&#39;a&#39;, None, &#39;c&#39;, &#39;d&#39;]}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create DataFrame</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">PyAudit.basics</span> <span class="k">import</span> <span class="n">zero_rate</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">zero_rate</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-<span class="go">         feature  feature_variance</span>
-<span class="go">       0       A               1.0</span>
-<span class="go">       1       B               0.5</span>
-<span class="go">       2       C               1.0</span>
-</pre></div>
-</div>
-</dd></dl>
-
-</div>
-<div class="section" id="freq-items-df">
-<h3>3.1.5. freq_items_df<a class="headerlink" href="#freq-items-df" title="Permalink to this headline">¶</a></h3>
-<dl class="function">
-<dt>
-<code class="descclassname">PyAudit.basics.</code><code class="descname">freq_items_df</code><span class="sig-paren">(</span><em>df_in</em>, <em>top_n=3</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/../../../anaconda3/lib/python3.7/site-packages/PyAudit/basics.py#L140-L173"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>find out the top n values and the corresponding frequency for each feature</p>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">df_merge</code><span class="sig-paren">(</span><em>dfs</em>, <em>key</em>, <em>how='left'</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L44-L53"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Merge multiple pandas data frames with same key.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>df_in</strong> – input pandas DataFrame</li>
-<li><strong>top_n</strong> – the number of the top values</li>
+<li><strong>dfs</strong> – name list of the data frames</li>
+<li><strong>key</strong> – key for join</li>
+<li><strong>how</strong> – method for join, the default value is left</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">top n values and the corresponding frequency for each feature</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body"><p class="first">Wenqiang Feng and Ming Chen</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Email:</th><td class="field-body"><p class="first last"><a class="reference external" href="mailto:von198&#37;&#52;&#48;gmail&#46;com">von198<span>&#64;</span>gmail<span>&#46;</span>com</a></p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">merged data frame</p>
 </td>
 </tr>
 </tbody>
 </table>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span><span class="p">{</span>
-<span class="gp">&gt;&gt;&gt; </span>   <span class="s1">&#39;num&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="s1">&#39;1223334444&#39;</span><span class="p">),</span>
-<span class="gp">&gt;&gt;&gt; </span>   <span class="s1">&#39;cat&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="s1">&#39;wxxyyyzzzz&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span>   <span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">astype</span><span class="p">({</span><span class="s2">&quot;num&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s2">&quot;cat&quot;</span><span class="p">:</span> <span class="nb">object</span><span class="p">})</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">freq_items_df</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">top_n</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
-<span class="go">      feature     top_items     top_freqs</span>
-<span class="go">    0     num  [4, 3, 2, 1]  [4, 3, 2, 1]</span>
-<span class="go">    1     cat  [z, y, x, w]  [4, 3, 2, 1]</span>
-</pre></div>
+</dd></dl>
+
 </div>
+<div class="section" id="data-types">
+<h3>3.1.4. data_types<a class="headerlink" href="#data-types" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">data_types</code><span class="sig-paren">(</span><em>df_in</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L56-L75"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Generate the data types of the rdd data frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>df_in</strong> – the input rdd data frame</li>
+<li><strong>tracking</strong> – the flag for displaying CPU time, the default value is False</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">data types pandas data frame</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="dtypes-class">
+<h3>3.1.5. dtypes_class<a class="headerlink" href="#dtypes-class" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">dtypes_class</code><span class="sig-paren">(</span><em>df_in</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L78-L114"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Generate the data type categories: numerical, categorical, date and unsupported category.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>df_in</strong> – the input rdd data frame</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">data type categories</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="counts">
+<h3>3.1.6. counts<a class="headerlink" href="#counts" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">counts</code><span class="sig-paren">(</span><em>df_in</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L117-L140"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Generate the row counts and not null rows and distinct counts for each feature.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>df_in</strong> – the input rdd data frame</li>
+<li><strong>tracking</strong> – the flag for displaying CPU time, the default value is False</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the counts in pandas data frame</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="describe">
+<h3>3.1.7. describe<a class="headerlink" href="#describe" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">describe</code><span class="sig-paren">(</span><em>df_in</em>, <em>columns=None</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L143-L165"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Generate the simple data frame description using <img class="math" src="_images/math/8563570bd9327c56f41e9b5d4e9841e248e3491a.png" alt=".describe()"/> function in pyspark.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>df_in</strong> – the input rdd data frame</li>
+<li><strong>columns</strong> – the specific feature columns, the default value is None</li>
+<li><strong>tracking</strong> – the flag for displaying CPU time, the default value is False</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the description in pandas data frame</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="percentiles">
+<h3>3.1.8. percentiles<a class="headerlink" href="#percentiles" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">percentiles</code><span class="sig-paren">(</span><em>df_in</em>, <em>deciles=False</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L168-L197"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Generate the percentiles for rdd data frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>df_in</strong> – the input rdd data frame</li>
+<li><strong>deciles</strong> – the flag for generate the deciles</li>
+<li><strong>tracking</strong> – the flag for displaying CPU time, the default value is False</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">percentiles in pandas data frame</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
 <div class="section" id="feature-len">
-<h3>3.1.6. feature_len<a class="headerlink" href="#feature-len" title="Permalink to this headline">¶</a></h3>
+<h3>3.1.9. feature_len<a class="headerlink" href="#feature-len" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt>
-<code class="descclassname">PyAudit.basics.</code><code class="descname">feature_len</code><span class="sig-paren">(</span><em>df_in</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/../../../anaconda3/lib/python3.7/site-packages/PyAudit/basics.py#L176-L211"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>find out the min and max length of values for each feature</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>df_in</strong> – input pandas DataFrame</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">min and max length DataFrame</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Wenqiang Feng and Ming Chen</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Email:</th><td class="field-body"><a class="reference external" href="mailto:von198&#37;&#52;&#48;gmail&#46;com">von198<span>&#64;</span>gmail<span>&#46;</span>com</a></td>
-</tr>
-</tbody>
-</table>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
-<span class="gp">&gt;&gt;&gt; </span>     <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-<span class="gp">&gt;&gt;&gt; </span>     <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">]}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create DataFrame</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-<span class="go">         A  B     C</span>
-<span class="go">    0  1.0  1     a</span>
-<span class="go">    1  0.0  0  None</span>
-<span class="go">    2  NaN  0     c</span>
-<span class="go">    3  3.0  0     d</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">feature_len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
-<span class="go">    feature  min_length  max_length</span>
-<span class="go">  0       A           3           3</span>
-<span class="go">  1       B           1           1</span>
-<span class="go">  2       C           1           4</span>
-</pre></div>
-</div>
-</dd></dl>
-
-</div>
-<div class="section" id="correlation-matrix">
-<h3>3.1.7. correlation matrix<a class="headerlink" href="#correlation-matrix" title="Permalink to this headline">¶</a></h3>
-<dl class="function">
-<dt>
-<code class="descclassname">PyAudit.basics.</code><code class="descname">corr_matrix</code><span class="sig-paren">(</span><em>df_in</em>, <em>output_dir</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/../../../anaconda3/lib/python3.7/site-packages/PyAudit/basics.py#L214-L248"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>generate correlation matrix for numerical dataframe</p>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">feature_len</code><span class="sig-paren">(</span><em>df_in</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L200-L225"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Generate feature length statistical results for each feature in the rdd data frame.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>df_in</strong> – input pandas DataFrame</li>
-<li><strong>output_dir</strong> – output path</li>
+<li><strong>df_in</strong> – the input rdd data frame</li>
+<li><strong>tracking</strong> – the flag for displaying CPU time, the default value is False</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">correlation matrix</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body"><p class="first">Wenqiang Feng and Ming Chen</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Email:</th><td class="field-body"><p class="first last"><a class="reference external" href="mailto:von198&#37;&#52;&#48;gmail&#46;com">von198<span>&#64;</span>gmail<span>&#46;</span>com</a></p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the feature length statistical results in pandas data frame</p>
 </td>
 </tr>
 </tbody>
 </table>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
-<span class="gp">&gt;&gt;&gt; </span>     <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-<span class="gp">&gt;&gt;&gt; </span>     <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">]}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create DataFrame</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">corr_matrix</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
-<span class="go">              A         B</span>
-<span class="go">    A  1.000000 -0.188982</span>
-<span class="go">    B -0.188982  1.000000</span>
-</pre></div>
+</dd></dl>
+
 </div>
+<div class="section" id="freq-items">
+<h3>3.1.10. freq_items<a class="headerlink" href="#freq-items" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">freq_items</code><span class="sig-paren">(</span><em>df_in</em>, <em>top_n=5</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L228-L249"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Generate the top_n frequent items in for each feature in the rdd data frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>df_in</strong> – the input rdd data frame</li>
+<li><strong>top_n</strong> – the number of the most frequent item</li>
+<li><strong>tracking</strong> – the flag for displaying CPU time, the default value is False</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="rates">
+<h3>3.1.11. rates<a class="headerlink" href="#rates" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">rates</code><span class="sig-paren">(</span><em>df_in</em>, <em>columns=None</em>, <em>numeric=True</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L252-L308"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Generate the null, empty, negative, zero and  positive value rates and feature variance for
+each feature in the rdd data frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>df_in</strong> – the input rdd data frame</li>
+<li><strong>columns</strong> – the specific feature columns, the default value is None</li>
+<li><strong>numeric</strong> – the flag for numerical rdd data frame, the default value is True</li>
+<li><strong>tracking</strong> – the flag for displaying CPU time, the default value is False</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the null, empty, negative, zero and  positive value rates and feature variance
+in pandas data frame</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="corr-matrix">
+<h3>3.1.12. corr_matrix<a class="headerlink" href="#corr-matrix" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">corr_matrix</code><span class="sig-paren">(</span><em>df_in</em>, <em>method='pearson'</em>, <em>output_dir=None</em>, <em>rotation=True</em>, <em>display=False</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L311-L370"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Generate the correlation matrix and heat map plot for rdd data frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>df_in</strong> – the input rdd data frame</li>
+<li><strong>method</strong> – the method which applied to calculate the correlation matrix: pearson or spearman.
+the default value is pearson</li>
+<li><strong>output_dir</strong> – the out put directory, the default value is the current working directory</li>
+<li><strong>rotation</strong> – the flag for rotating the xticks in the plot, the default value is True</li>
+<li><strong>display</strong> – the flag for displaying the figures, the default value is False</li>
+<li><strong>tracking</strong> – the flag for displaying CPU time, the default value is False</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the correlation matrix in pandas data frame</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="plot-functions">
+<h2>3.2. Plot Functions<a class="headerlink" href="#plot-functions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="hist-plot">
+<h3>3.2.1. hist_plot<a class="headerlink" href="#hist-plot" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">hist_plot</code><span class="sig-paren">(</span><em>df_in</em>, <em>bins=50</em>, <em>output_dir=None</em>, <em>sample_size=None</em>, <em>display=False</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L373-L462"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Histogram plot for the numerical features in the rdd data frame. <strong>This part is super time and
+memory consuming.</strong> If the data size is larger than 10,000, the histograms will be saved in .pdf
+format. Otherwise, the histograms will be saved in .png format in hist folder.</p>
+<p>If your time and memory are limited, you can use sample_size to generate the subset of the data
+frame to generate the histograms.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>df_in</strong> – the input rdd data frame</li>
+<li><strong>bins</strong> – the number of bins for generate the bar plots</li>
+<li><strong>output_dir</strong> – the out put directory, the default value is the current working directory</li>
+<li><strong>sample_size</strong> – the size for generate the subset from the rdd data frame, the
+default value none</li>
+<li><strong>display</strong> – the flag for displaying the figures, the default value is False</li>
+<li><strong>tracking</strong> – the flag for displaying CPU time, the default value is False</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="bar-plot">
+<h3>3.2.2. bar_plot<a class="headerlink" href="#bar-plot" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">bar_plot</code><span class="sig-paren">(</span><em>df_in</em>, <em>top_n=20</em>, <em>rotation=True</em>, <em>output_dir=None</em>, <em>display=False</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L465-L520"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Bar plot for the categorical features in the rdd data frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>df_in</strong> – the input rdd data frame</li>
+<li><strong>top_n</strong> – the number of the most frequent feature to show in the bar plot</li>
+<li><strong>rotation</strong> – the flag for rotating the xticks in the plot, the default value is True</li>
+<li><strong>output_dir</strong> – the out put directory, the default value is the current working directory</li>
+<li><strong>display</strong> – the flag for displaying the figures, the default value is False</li>
+<li><strong>tracking</strong> – the flag for displaying CPU time, the default value is False</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="trend-plot">
+<h3>3.2.3. trend_plot<a class="headerlink" href="#trend-plot" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">trend_plot</code><span class="sig-paren">(</span><em>df_in</em>, <em>types='day'</em>, <em>d_time=None</em>, <em>rotation=True</em>, <em>output_dir=None</em>, <em>display=False</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L523-L600"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Trend plot for the aggregated time series data if the rdd data frame has date features and numerical features.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>df_in</strong> – the input rdd data frame</li>
+<li><strong>types</strong> – the types for time feature aggregation: day, month, year, the default value is day</li>
+<li><strong>d_time</strong> – the specific feature name of the date feature, the default value
+is the first date feature in the rdd data frame</li>
+<li><strong>rotation</strong> – the flag for rotating the xticks in the plot, the default value is True</li>
+<li><strong>output_dir</strong> – the out put directory, the default value is the current working directory</li>
+<li><strong>display</strong> – the flag for displaying the figures, the default value is False</li>
+<li><strong>tracking</strong> – the flag for displaying CPU time, the default value is False</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
 </div>
 <div class="section" id="summary-functions">
-<h2>3.2. Summary Functions<a class="headerlink" href="#summary-functions" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="numeric-summary">
-<h3>3.2.1. numeric_summary<a class="headerlink" href="#numeric-summary" title="Permalink to this headline">¶</a></h3>
+<h2>3.3. Summary Functions<a class="headerlink" href="#summary-functions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="dataset-summary">
+<h3>3.3.1. dataset_summary<a class="headerlink" href="#dataset-summary" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt>
-<code class="descclassname">PyAudit.basics.</code><code class="descname">numeric_summary</code><span class="sig-paren">(</span><em>df_in</em>, <em>output_dir</em>, <em>top_n=4</em>, <em>deciles=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/../../../anaconda3/lib/python3.7/site-packages/PyAudit/basics.py#L251-L336"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>generate statistical summary for numerical DateFrame</p>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">dataset_summary</code><span class="sig-paren">(</span><em>df_in</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L603-L655"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>The data set basics summary.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>df_in</strong> – input pandas DataFrame</li>
-<li><strong>deciles</strong> – flag for percentiles style</li>
+<li><strong>df_in</strong> – the input rdd data frame</li>
+<li><strong>tracking</strong> – the flag for displaying CPU time, the default value is False</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">statistical summary for numerical data</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body"><p class="first">Wenqiang Feng and Ming Chen</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Email:</th><td class="field-body"><p class="first last"><a class="reference external" href="mailto:von198&#37;&#52;&#48;gmail&#46;com">von198<span>&#64;</span>gmail<span>&#46;</span>com</a></p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">data set summary in pandas data frame</p>
 </td>
 </tr>
 </tbody>
 </table>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
-<span class="gp">&gt;&gt;&gt; </span>     <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-<span class="gp">&gt;&gt;&gt; </span>     <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">]}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create DataFrame</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">numeric_summary</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
-<span class="go">      feature data_type  min_digits  ...  zero_rate  pos_rate  neg_rate</span>
-<span class="go">    A       A   float64           3  ...   0.333333  0.666667       0.0</span>
-<span class="go">    B       B     int64           3  ...   0.750000  0.250000       0.0</span>
-</pre></div>
+</dd></dl>
+
 </div>
+<div class="section" id="numeric-summary">
+<h3>3.3.2. numeric_summary<a class="headerlink" href="#numeric-summary" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">numeric_summary</code><span class="sig-paren">(</span><em>df_in</em>, <em>columns=None</em>, <em>deciles=False</em>, <em>top_n=5</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L658-L696"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>The auditing function for numerical rdd data frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>df_in</strong> – the input rdd data frame</li>
+<li><strong>columns</strong> – the specific feature columns, the default value is None</li>
+<li><strong>deciles</strong> – the flag for generate the deciles</li>
+<li><strong>top_n</strong> – the number of the most frequent item</li>
+<li><strong>tracking</strong> – the flag for displaying CPU time, the default value is False</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the audited results for the numerical features in pandas data frame</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
 <div class="section" id="category-summary">
-<h3>3.2.2. category_summary<a class="headerlink" href="#category-summary" title="Permalink to this headline">¶</a></h3>
+<h3>3.3.3. category_summary<a class="headerlink" href="#category-summary" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt>
-<code class="descclassname">PyAudit.basics.</code><code class="descname">category_summary</code><span class="sig-paren">(</span><em>df_in</em>, <em>output_dir</em>, <em>top_n=4</em>, <em>deciles=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/../../../anaconda3/lib/python3.7/site-packages/PyAudit/basics.py#L339-L399"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>generate statistical summary for numerical DateFrame</p>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">category_summary</code><span class="sig-paren">(</span><em>df_in</em>, <em>columns=None</em>, <em>top_n=5</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L699-L734"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>The auditing function for categorical rdd data frame.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>df_in</strong> – input pandas DataFrame</li>
-<li><strong>deciles</strong> – flag for percentiles style</li>
+<li><strong>df_in</strong> – the input rdd data frame</li>
+<li><strong>columns</strong> – the specific feature columns, the default value is None</li>
+<li><strong>top_n</strong> – the number of the most frequent item</li>
+<li><strong>tracking</strong> – the flag for displaying CPU time, the default value is False</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">statistical summary for numerical data</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body"><p class="first">Wenqiang Feng and Ming Chen</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Email:</th><td class="field-body"><p class="first last"><a class="reference external" href="mailto:von198&#37;&#52;&#48;gmail&#46;com">von198<span>&#64;</span>gmail<span>&#46;</span>com</a></p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the audited results for the categorical features in pandas data frame</p>
 </td>
 </tr>
 </tbody>
 </table>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
-<span class="gp">&gt;&gt;&gt; </span>     <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-<span class="gp">&gt;&gt;&gt; </span>     <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">]}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create DataFrame</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">numeric_summary</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
-<span class="go">     feature data_type  min_digits  ...  top_values  top_freqs  missing_rate</span>
-<span class="go">   C       C    object           1  ...   [a, d, c]  [1, 1, 1]          0.25</span>
-</pre></div>
-</div>
 </dd></dl>
 
 </div>
 </div>
 <div class="section" id="auditing-function">
-<h2>3.3. Auditing Function<a class="headerlink" href="#auditing-function" title="Permalink to this headline">¶</a></h2>
+<h2>3.4. Auditing Function<a class="headerlink" href="#auditing-function" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="auditing">
-<h3>3.3.1. auditing<a class="headerlink" href="#auditing" title="Permalink to this headline">¶</a></h3>
+<h3>3.4.1. auditing<a class="headerlink" href="#auditing" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">auditing</code><span class="sig-paren">(</span><em>df_in</em>, <em>writer=None</em>, <em>columns=None</em>, <em>deciles=False</em>, <em>top_freq_item=5</em>, <em>bins=50</em>, <em>top_cat_item=20</em>, <em>method='pearson'</em>, <em>output_dir=None</em>, <em>types='day'</em>, <em>d_time=None</em>, <em>rotation=True</em>, <em>sample_size=None</em>, <em>display=False</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L768-L845"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>The wrapper of auditing functions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>df_in</strong> – the input rdd data frame</li>
+<li><strong>writer</strong> – the writer for excel output</li>
+<li><strong>columns</strong> – the specific feature columns, the default value is None</li>
+<li><strong>deciles</strong> – the flag for generate the deciles</li>
+<li><strong>top_freq_item</strong> – the number of the most frequent item</li>
+<li><strong>bins</strong> – the number of bins for generate the bar plots</li>
+<li><strong>top_cat_item</strong> – the number of the most frequent feature to show in the bar plot</li>
+<li><strong>method</strong> – the method which applied to calculate the correlation matrix: pearson or spearman.
+the default value is pearson</li>
+<li><strong>output_dir</strong> – the out put directory, the default value is the current working directory</li>
+<li><strong>types</strong> – the types for time feature aggregation: day, month, year, the default value is day</li>
+<li><strong>d_time</strong> – the specific feature name of the date feature, the default value
+is the first date feature in the rdd data frame</li>
+<li><strong>rotation</strong> – the flag for rotating the xticks in the plot, the default value is True</li>
+<li><strong>sample_size</strong> – the size for generate the subset from the rdd data frame, the
+default value none</li>
+<li><strong>display</strong> – the flag for displaying the figures, the default value is False</li>
+<li><strong>tracking</strong> – the flag for displaying CPU time, the default value is False</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the all audited results in pandas data frame</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="plotting-function">
+<h2>3.5. Plotting Function<a class="headerlink" href="#plotting-function" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="fig-plots">
+<h3>3.5.1. fig_plots<a class="headerlink" href="#fig-plots" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">fig_plots</code><span class="sig-paren">(</span><em>df_in</em>, <em>output_dir=None</em>, <em>bins=50</em>, <em>top_n=20</em>, <em>types='day'</em>, <em>d_time=None</em>, <em>rotation=True</em>, <em>sample_size=None</em>, <em>display=False</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L737-L765"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>The wrapper for the plot functions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>df_in</strong> – the input rdd data frame</li>
+<li><strong>output_dir</strong> – the out put directory, the default value is the current working directory</li>
+<li><strong>bins</strong> – the number of bins for generate the bar plots</li>
+<li><strong>top_n</strong> – the number of the most frequent feature to show in the bar plot</li>
+<li><strong>types</strong> – the types for time feature aggregation: day, month, year, the default value is day</li>
+<li><strong>d_time</strong> – the specific feature name of the date feature, the default value
+is the first date feature in the rdd data frame</li>
+<li><strong>rotation</strong> – the flag for rotating the xticks in the plot, the default value is True</li>
+<li><strong>sample_size</strong> – the size for generate the subset from the rdd data frame, the
+default value none</li>
+<li><strong>display</strong> – the flag for displaying the figures, the default value is False</li>
+<li><strong>tracking</strong> – the flag for displaying CPU time, the default value is False</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 </div>
 </div>
@@ -555,7 +740,7 @@
     <p>
         &copy; Copyright 2019, Wenqiang Feng and Yiming Xu
       <span class="lastupdated">
-        Last updated on Jun 26, 2019.
+        Last updated on Jul 01, 2019.
       </span>
 
     </p>

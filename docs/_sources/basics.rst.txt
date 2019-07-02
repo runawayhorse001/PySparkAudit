@@ -1,76 +1,146 @@
 .. _basics:
 
-===========================
-Python Data Audit Functions 
-===========================
+============================
+PySpark Data Audit Functions 
+============================
 
 Basic Functions
 +++++++++++++++
 
+mkdir
+-----
+
+.. automodule:: PySparkAudit.PySparkAudit
+   :members: mkdir
+   :noindex:
+
+mkdir_clean
+-----------
+
+.. automodule:: PySparkAudit.PySparkAudit
+   :members: mkdir_clean
+   :noindex:
+
+
+df_merge
+--------
+
+.. automodule:: PySparkAudit.PySparkAudit
+   :members: df_merge
+   :noindex:
+
+data_types
+----------
+
+.. automodule:: PySparkAudit.PySparkAudit
+   :members: data_types
+   :noindex:
+
 dtypes_class
 ------------
 
-.. automodule:: PyAudit.basics	
+.. automodule:: PySparkAudit.PySparkAudit
    :members: dtypes_class
-
-
-
-missing_rate
-------------
-
-.. automodule:: PyAudit.basics	
-   :members: missing_rate
    :noindex:
 
-zero_rate
----------
+counts
+------
 
-.. automodule:: PyAudit.basics	
-   :members: zero_rate
+.. automodule:: PySparkAudit.PySparkAudit
+   :members: counts
    :noindex:
 
-feature_variance
-----------------
+describe
+--------
 
-.. automodule:: PyAudit.basics	
-   :members: feature_variance  
+.. automodule:: PySparkAudit.PySparkAudit
+   :members: describe
    :noindex:
 
-freq_items_df
--------------
 
-.. automodule:: PyAudit.basics	
-   :members: freq_items_df     
+percentiles
+-----------
+
+.. automodule:: PySparkAudit.PySparkAudit
+   :members: percentiles
    :noindex:
 
 feature_len
 -----------
 
-.. automodule:: PyAudit.basics	
-   :members: feature_len   
+.. automodule:: PySparkAudit.PySparkAudit
+   :members: feature_len
    :noindex:
 
-correlation matrix 
-------------------
+freq_items
+----------
 
-.. automodule:: PyAudit.basics	
-   :members: corr_matrix     
+.. automodule:: PySparkAudit.PySparkAudit
+   :members: freq_items
+   :noindex:
+
+
+rates
+-----
+
+.. automodule:: PySparkAudit.PySparkAudit
+   :members: rates
+   :noindex:
+
+corr_matrix
+-----------
+
+.. automodule:: PySparkAudit.PySparkAudit
+   :members: corr_matrix
+   :noindex:
+
+
+Plot Functions
+++++++++++++++
+
+hist_plot
+---------
+
+.. automodule:: PySparkAudit.PySparkAudit
+   :members: hist_plot
+   :noindex:
+
+bar_plot
+--------
+
+.. automodule:: PySparkAudit.PySparkAudit
+   :members: bar_plot
+   :noindex:
+
+
+trend_plot
+----------
+
+.. automodule:: PySparkAudit.PySparkAudit
+   :members: trend_plot
    :noindex:
 
 Summary Functions
 +++++++++++++++++
 
+dataset_summary
+---------------
+
+.. automodule:: PySparkAudit.PySparkAudit	
+   :members: dataset_summary      
+   :noindex:
+
 numeric_summary
 ---------------
 
-.. automodule:: PyAudit.basics	
+.. automodule:: PySparkAudit.PySparkAudit	
    :members: numeric_summary      
    :noindex:
 
 category_summary
 ----------------
 
-.. automodule:: PyAudit.basics	
+.. automodule:: PySparkAudit.PySparkAudit	
    :members: category_summary 
    :noindex:           
 
@@ -81,6 +151,16 @@ Auditing Function
 auditing
 --------
 
-.. automodule:: PyAudit.basics   
+.. automodule:: PySparkAudit.PySparkAudit   
    :members: auditing 
    :noindex:    
+
+Plotting Function
++++++++++++++++++
+
+fig_plots
+---------
+
+.. automodule:: PySparkAudit.PySparkAudit
+   :members: fig_plots
+   :noindex:   

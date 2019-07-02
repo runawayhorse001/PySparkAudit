@@ -37,7 +37,7 @@
   <link rel="stylesheet" href="_static/fix_rtd.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="3. Python Data Audit Functions" href="basics.html" />
+    <link rel="next" title="3. PySpark Data Audit Functions" href="basics.html" />
     <link rel="prev" title="1. Preface" href="preface.html" /> 
 </head>
 
@@ -91,11 +91,12 @@
 <li class="toctree-l3"><a class="reference internal" href="#id1">2.2.2. Install</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#uninstall">2.2.3. Uninstall</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#test">2.2.4. Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#audited-results">2.2.5. Audited Results</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="basics.html">3. Python Data Audit Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">3. PySpark Data Audit Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="demo.html">4. Auditing Demos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference.html">5. Main Reference</a></li>
 </ul>
@@ -198,79 +199,35 @@ python test.py
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">test.py</span></code></p>
-<p><code class="docutils literal notranslate"><span class="pre">Results</span></code>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>  feature  missing_rate
-<span class="m">0</span>       A          <span class="m">0</span>.25
-<span class="m">1</span>       B          <span class="m">0</span>.00
-<span class="m">2</span>       C          <span class="m">0</span>.25
-  feature  zero_rate
-<span class="m">0</span>       A   <span class="m">0</span>.333333
-<span class="m">1</span>       B   <span class="m">0</span>.750000
-<span class="m">2</span>       C   <span class="m">0</span>.000000
-  feature  feature_variance
-<span class="m">0</span>       A               <span class="m">1</span>.0
-<span class="m">1</span>       B               <span class="m">0</span>.5
-<span class="m">2</span>       C               <span class="m">1</span>.0
-   Age    Sex     ChestPain  RestBP  Chol  ...  Oldpeak  Slope   Ca        Thal  AHD
-<span class="m">0</span>   <span class="m">63</span>   True       typical     <span class="m">145</span>   <span class="m">233</span>  ...      <span class="m">2</span>.3      <span class="m">3</span>  <span class="m">0</span>.0       fixed   No
-<span class="m">1</span>   <span class="m">67</span>   True  asymptomatic     <span class="m">160</span>   <span class="m">286</span>  ...      <span class="m">1</span>.5      <span class="m">2</span>  <span class="m">3</span>.0      normal  Yes
-<span class="m">2</span>   <span class="m">67</span>   True  asymptomatic     <span class="m">120</span>   <span class="m">229</span>  ...      <span class="m">2</span>.6      <span class="m">2</span>  <span class="m">2</span>.0  reversable  Yes
-<span class="m">3</span>   <span class="m">37</span>   True    nonanginal     <span class="m">130</span>   <span class="m">250</span>  ...      <span class="m">3</span>.5      <span class="m">3</span>  <span class="m">0</span>.0      normal   No
-<span class="m">4</span>   <span class="m">41</span>  False    nontypical     <span class="m">130</span>   <span class="m">204</span>  ...      <span class="m">1</span>.4      <span class="m">1</span>  <span class="m">0</span>.0      normal   No
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
 
-<span class="o">[</span><span class="m">5</span> rows x <span class="m">14</span> columns<span class="o">]</span>
-<span class="o">[</span><span class="s1">&#39;Age&#39;</span>, <span class="s1">&#39;RestBP&#39;</span>, <span class="s1">&#39;Chol&#39;</span>, <span class="s1">&#39;Fbs&#39;</span>, <span class="s1">&#39;RestECG&#39;</span>, <span class="s1">&#39;MaxHR&#39;</span>, <span class="s1">&#39;ExAng&#39;</span>, <span class="s1">&#39;Oldpeak&#39;</span>, <span class="s1">&#39;Slope&#39;</span>, <span class="s1">&#39;Ca&#39;</span><span class="o">]</span>
-<span class="o">[</span><span class="s1">&#39;ChestPain&#39;</span>, <span class="s1">&#39;Thal&#39;</span>, <span class="s1">&#39;AHD&#39;</span><span class="o">]</span>
-<span class="o">[</span><span class="s1">&#39;Sex&#39;</span><span class="o">]</span>
-      feature   dtypes
-<span class="m">0</span>         Age    int64
-<span class="m">1</span>         Sex     bool
-<span class="m">2</span>   ChestPain   object
-<span class="m">3</span>      RestBP    int64
-<span class="m">4</span>        Chol    int64
-<span class="m">5</span>         Fbs    int64
-<span class="m">6</span>     RestECG    int64
-<span class="m">7</span>       MaxHR    int64
-<span class="m">8</span>       ExAng    int64
-<span class="m">9</span>     Oldpeak  float64
-<span class="m">10</span>      Slope    int64
-<span class="m">11</span>         Ca  float64
-<span class="m">12</span>       Thal   object
-<span class="m">13</span>        AHD   object
-      feature   dtypes     class
-<span class="m">0</span>         Age    int64   numeric
-<span class="m">1</span>         Sex     bool      bool
-<span class="m">2</span>   ChestPain   object  category
-<span class="m">3</span>      RestBP    int64   numeric
-<span class="m">4</span>        Chol    int64   numeric
-<span class="m">5</span>         Fbs    int64   numeric
-<span class="m">6</span>     RestECG    int64   numeric
-<span class="m">7</span>       MaxHR    int64   numeric
-<span class="m">8</span>       ExAng    int64   numeric
-<span class="m">9</span>     Oldpeak  float64   numeric
-<span class="m">10</span>      Slope    int64   numeric
-<span class="m">11</span>         Ca  float64   numeric
-<span class="m">12</span>       Thal   object  category
-<span class="m">13</span>        AHD   object  category
-      feature  missing_rate
-<span class="m">0</span>         Age      <span class="m">0</span>.000000
-<span class="m">1</span>         Sex      <span class="m">0</span>.000000
-<span class="m">2</span>   ChestPain      <span class="m">0</span>.000000
-<span class="m">3</span>      RestBP      <span class="m">0</span>.000000
-<span class="m">4</span>        Chol      <span class="m">0</span>.000000
-<span class="m">5</span>         Fbs      <span class="m">0</span>.000000
-<span class="m">6</span>     RestECG      <span class="m">0</span>.000000
-<span class="m">7</span>       MaxHR      <span class="m">0</span>.000000
-<span class="m">8</span>       ExAng      <span class="m">0</span>.000000
-<span class="m">9</span>     Oldpeak      <span class="m">0</span>.000000
-<span class="m">10</span>      Slope      <span class="m">0</span>.000000
-<span class="m">11</span>         Ca      <span class="m">0</span>.013201
-<span class="m">12</span>       Thal      <span class="m">0</span>.006601
-<span class="m">13</span>        AHD      <span class="m">0</span>.000000
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span> \
+    <span class="o">.</span><span class="n">builder</span> \
+    <span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;Python Spark regression example&quot;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">&quot;spark.some.config.option&quot;</span><span class="p">,</span> <span class="s2">&quot;some-value&quot;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
 
-Process finished with <span class="nb">exit</span> code <span class="m">0</span>
+
+<span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="kn">import</span> <span class="n">dtypes_class</span><span class="p">,</span> <span class="n">hist_plot</span><span class="p">,</span> <span class="n">bar_plot</span><span class="p">,</span> <span class="n">freq_items</span><span class="p">,</span><span class="n">feature_len</span>
+<span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="kn">import</span> <span class="n">dataset_summary</span><span class="p">,</span> <span class="n">rates</span>
+<span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="kn">import</span> <span class="n">trend_plot</span><span class="p">,</span> <span class="n">auditing</span>
+<span class="c1"># path = &#39;/home/feng/Desktop&#39;</span>
+
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s1">&#39;Heart.csv&#39;</span><span class="p">,</span>
+                      <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">inferSchema</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">auditing</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="audited-results">
+<h3>2.2.5. Audited Results<a class="headerlink" href="#audited-results" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="_images/t_folder.png" src="_images/t_folder.png" />
+</div>
+</div></blockquote>
 </div>
 </div>
 </div>
@@ -283,7 +240,7 @@ Process finished with <span class="nb">exit</span> code <span class="m">0</span>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="basics.html" class="btn btn-neutral float-right" title="3. Python Data Audit Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="basics.html" class="btn btn-neutral float-right" title="3. PySpark Data Audit Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="preface.html" class="btn btn-neutral float-left" title="1. Preface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -297,7 +254,7 @@ Process finished with <span class="nb">exit</span> code <span class="m">0</span>
     <p>
         &copy; Copyright 2019, Wenqiang Feng and Yiming Xu
       <span class="lastupdated">
-        Last updated on Jun 26, 2019.
+        Last updated on Jul 01, 2019.
       </span>
 
     </p>
