@@ -27,7 +27,7 @@ Or you can istall the PySparkAudit from the repo:
 #### 3. test 
 
 	cd PySparkAudit/test
-	python test.py
+	spark-submit test.py
 
 #### 4. uninstall 
 

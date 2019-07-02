@@ -426,7 +426,7 @@ def hist_plot(df_in, bins=50, output_dir=None, sample_size=None, display=False, 
                 if display:
                     plt.show()
                 plt.close(fig)
-            print('Histograms plots are done!')
+            print('Histograms plots are DONE!!!')
             pdf.close()
         else:
             mkdir_clean(out_path + '/02-hist')
