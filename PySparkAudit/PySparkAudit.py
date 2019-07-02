@@ -324,8 +324,7 @@ def corr_matrix(df_in, method="pearson", output_dir=None, rotation=True, display
     _, num_fields, _, _, _ = dtypes_class(df_in)
 
     if len(num_fields) > 1:
-        df_in = df_in.select(num_fields)
-        df_in = df_in.na.drop()
+        df_in = df_in.select(num_fields).na.drop()
 
         if output_dir is None:
             out_path = os.getcwd() + '/Audited'

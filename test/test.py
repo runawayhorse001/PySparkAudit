@@ -5,7 +5,7 @@ spark = SparkSession.builder.appName("PySpark Data Audit example")\
                     .config("spark.some.config.option", "some-value").getOrCreate()
 
 # import PySparkAudit function
-from PySparkAudit import trend_plot, auditing
+from PySparkAudit import trend_plot, corr_matrix, auditing
 
 # load data
 data = spark.read.format('com.databricks.spark.csv')\
