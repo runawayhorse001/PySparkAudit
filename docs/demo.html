@@ -93,6 +93,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#audited-results-folder">4.2.2. Audited results folder</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#auditing-on-big-dataset">4.3. Auditing on Big Dataset</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">4.3.1. print in bash</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">4.3.2. Audited results folder</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="reference.html">5. Main Reference</a></li>
@@ -163,6 +168,47 @@
 <p>The following demos are designed to show how to use <code class="docutils literal notranslate"><span class="pre">PySparkAudit</span></code> to aduit rdd <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>.</p>
 <div class="section" id="auditing-function-by-function">
 <h2>4.1. Auditing function by function<a class="headerlink" href="#auditing-function-by-function" title="Permalink to this headline">¶</a></h2>
+<p>If you just need a piece of the audit result, you can call the corresponding function to generate it.
+There are 9 basic auditing functions, 3 figure plot functions and 3 summary functions in the PySparkAudit library.</p>
+<p>syntax</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>from PySparkAudit import *
+</pre></div>
+</div>
+<ol class="arabic">
+<li><p class="first">Basic Functions:</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>data_types: <code class="xref py py-mod docutils literal notranslate"><span class="pre">PySparkAudit.data_types</span></code></li>
+<li>dtypes_class: <code class="xref py py-mod docutils literal notranslate"><span class="pre">PySparkAudit.dtypes_class</span></code></li>
+<li>dtypes_class: <code class="xref py py-mod docutils literal notranslate"><span class="pre">PySparkAudit.counts</span></code></li>
+<li>dtypes_class: <code class="xref py py-mod docutils literal notranslate"><span class="pre">PySparkAudit.describe</span></code></li>
+<li>dtypes_class: <code class="xref py py-mod docutils literal notranslate"><span class="pre">PySparkAudit.percentiles</span></code></li>
+<li>dtypes_class: <code class="xref py py-mod docutils literal notranslate"><span class="pre">PySparkAudit.feature_len</span></code></li>
+<li>dtypes_class: <code class="xref py py-mod docutils literal notranslate"><span class="pre">PySparkAudit.freq_items</span></code></li>
+<li>dtypes_class: <code class="xref py py-mod docutils literal notranslate"><span class="pre">PySparkAudit.rates</span></code></li>
+<li>dtypes_class: <code class="xref py py-mod docutils literal notranslate"><span class="pre">PySparkAudit.corr_matrix</span></code></li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">Plot Functions:</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>hist_plot: <code class="xref py py-mod docutils literal notranslate"><span class="pre">PySparkAudit.hist_plot</span></code></li>
+<li>bar_plot: <code class="xref py py-mod docutils literal notranslate"><span class="pre">PySparkAudit.bar_plot</span></code></li>
+<li>trend_plot: <code class="xref py py-mod docutils literal notranslate"><span class="pre">PySparkAudit.trend_plot</span></code></li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">Summary Functions</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>dataset_summary: <code class="xref py py-mod docutils literal notranslate"><span class="pre">PySparkAudit.dataset_summary</span></code></li>
+<li>numeric_summary: <code class="xref py py-mod docutils literal notranslate"><span class="pre">PySparkAudit.numeric_summary</span></code></li>
+<li>category_summary: <code class="xref py py-mod docutils literal notranslate"><span class="pre">PySparkAudit.category_summary</span></code></li>
+</ol>
+</div></blockquote>
+</li>
+</ol>
 <p>For example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
 
@@ -377,6 +423,138 @@ Process finished with <span class="nb">exit</span> code <span class="m">0</span>
 <blockquote>
 <div><div class="figure align-center">
 <img alt="_images/bars.png" src="_images/bars.png" />
+</div>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="auditing-on-big-dataset">
+<h2>4.3. Auditing on Big Dataset<a class="headerlink" href="#auditing-on-big-dataset" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we will demonstrate the auditing performance and audited results on the big data set.
+The data set is <code class="docutils literal notranslate"><span class="pre">Spanish</span> <span class="pre">High</span> <span class="pre">Speed</span> <span class="pre">Rail</span> <span class="pre">tickets</span> <span class="pre">pricing</span></code>.  It is available at :
+<a class="reference external" href="https://www.kaggle.com/thegurus/spanish-high-speed-rail-system-ticket-pricing">https://www.kaggle.com/thegurus/spanish-high-speed-rail-system-ticket-pricing</a>. This data set has 2579771
+samples and 10 features.</p>
+<p>From the following CPU time, you will see most
+of the time was spent on plotting the histograms. If your time and memory are limited, we will suggest
+you to use <code class="docutils literal notranslate"><span class="pre">sample_size</span></code> to generate the subset of the the dataset to plot histograms.</p>
+<p>For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span> \
+    <span class="o">.</span><span class="n">builder</span> \
+    <span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;Python Spark regression example&quot;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">&quot;spark.some.config.option&quot;</span><span class="p">,</span> <span class="s2">&quot;some-value&quot;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+
+
+<span class="c1"># from PySparkAudit import dtypes_class, hist_plot, bar_plot, freq_items,feature_len</span>
+<span class="c1"># from PySparkAudit import dataset_summary, rates, trend_plot</span>
+
+<span class="c1"># Audited results output path</span>
+<span class="n">out_path</span> <span class="o">=</span> <span class="s1">&#39;/home/feng/Desktop&#39;</span>
+
+<span class="c1"># import PySpark Audit function</span>
+<span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="kn">import</span> <span class="n">auditing</span>
+
+<span class="c1"># load dataset</span>
+<span class="c1"># Spanish High Speed Rail tickets pricing - Renfe (~2.58M)</span>
+<span class="c1"># https://www.kaggle.com/thegurus/spanish-high-speed-rail-system-ticket-pricing</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s1">&#39;/home/feng/Downloads/renfe.csv&#39;</span><span class="p">,</span>
+                      <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">inferSchema</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># auditing in one function</span>
+<span class="n">auditing</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="n">out_path</span><span class="p">,</span> <span class="n">tracking</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Result:</p>
+<div class="section" id="id1">
+<h3>4.3.1. print in bash<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">================================================================</span>
+The audited results summary audited_results.xlsx was located at:
+/home/feng/Desktop/Audited
+Generate data <span class="nb">set</span> summary <span class="nv">took</span> <span class="o">=</span> <span class="m">60</span>.535009145736694 <span class="nv">s</span>
+<span class="o">================================================================</span>
+Collecting data types.... Please be patient!
+Generate counts <span class="nv">took</span> <span class="o">=</span> <span class="m">0</span>.0016515254974365234 <span class="nv">s</span>
+<span class="o">================================================================</span>
+Collecting features<span class="s1">&#39; counts.... Please be patient!</span>
+<span class="s1">Generate counts took = 6.502962350845337 s</span>
+<span class="s1">================================================================</span>
+<span class="s1">Collecting data frame description.... Please be patient!</span>
+<span class="s1">Generate data frame description took = 1.5562639236450195 s</span>
+<span class="s1">================================================================</span>
+<span class="s1">Calculating percentiles.... Please be patient!</span>
+<span class="s1">Generate percentiles took = 19.76785445213318 s</span>
+<span class="s1">================================================================</span>
+<span class="s1">Calculating features&#39;</span> length.... Please be patient!
+Generate features<span class="s1">&#39; length took = 4.953453540802002 s</span>
+<span class="s1">================================================================</span>
+<span class="s1">Calculating top 5 frequent items.... Please be patient!</span>
+<span class="s1">Generate rates took: 4.761325359344482 s</span>
+<span class="s1">================================================================</span>
+<span class="s1">Calculating rates.... Please be patient!</span>
+<span class="s1">Generate rates took: 17.201056718826294 s</span>
+<span class="s1">Auditing numerical data took = 54.77840781211853 s</span>
+<span class="s1">================================================================</span>
+<span class="s1">Collecting data types.... Please be patient!</span>
+<span class="s1">Generate counts took = 0.001623392105102539 s</span>
+<span class="s1">================================================================</span>
+<span class="s1">Collecting features&#39;</span> counts.... Please be patient!
+Generate counts <span class="nv">took</span> <span class="o">=</span> <span class="m">12</span>.59226107597351 <span class="nv">s</span>
+<span class="o">================================================================</span>
+Calculating features<span class="s1">&#39; length.... Please be patient!</span>
+<span class="s1">Generate features&#39;</span> length <span class="nv">took</span> <span class="o">=</span> <span class="m">5</span>.332952976226807 <span class="nv">s</span>
+<span class="o">================================================================</span>
+Calculating top <span class="m">5</span> frequent items.... Please be patient!
+Generate rates took: <span class="m">6</span>.832213878631592 <span class="nv">s</span>
+<span class="o">================================================================</span>
+Calculating rates.... Please be patient!
+Generate rates took: <span class="m">23</span>.704302072525024 s
+Auditing categorical data <span class="nv">took</span> <span class="o">=</span> <span class="m">48</span>.484763622283936 <span class="nv">s</span>
+<span class="o">================================================================</span>
+The correlation matrix plot Corr.png was located at:
+/home/feng/Desktop/Audited
+Calculating correlation matrix... Please be patient!
+Generate correlation matrix <span class="nv">took</span> <span class="o">=</span> <span class="m">19</span>.61273431777954 <span class="nv">s</span>
+<span class="o">================================================================</span>
+The Histograms plots *.png were located at:
+/home/feng/Desktop/Audited/02-hist
+Plotting histograms of _c0.... Please be patient!
+Plotting histograms of price.... Please be patient!
+Histograms plots are DONE!!!
+Generate histograms plots <span class="nv">took</span> <span class="o">=</span> <span class="m">160</span>.3421311378479 <span class="nv">s</span>
+<span class="o">================================================================</span>
+The Bar plot Bar_plots.pdf was located at:
+/home/feng/Desktop/Audited
+Plotting barplot of origin.... Please be patient!
+Plotting barplot of destination.... Please be patient!
+Plotting barplot of train_type.... Please be patient!
+Plotting barplot of train_class.... Please be patient!
+Plotting barplot of fare.... Please be patient!
+Plotting barplot of insert_date.... Please be patient!
+Plotting barplot of start_date.... Please be patient!
+Plotting barplot of end_date.... Please be patient!
+Bar plots are DONE!!!
+Generate bar plots <span class="nv">took</span> <span class="o">=</span> <span class="m">24</span>.17994236946106 <span class="nv">s</span>
+<span class="o">================================================================</span>
+The Trend plot Trend_plots.pdf was located at:
+/home/feng/Desktop/Audited
+Plotting trend plot of _c0.... Please be patient!
+Plotting trend plot of price.... Please be patient!
+Trend plots are DONE!!!
+Generate trend plots <span class="nv">took</span> <span class="o">=</span> <span class="m">11</span>.697550296783447 s
+Generate all the figures <span class="nv">took</span> <span class="o">=</span> <span class="m">196</span>.25823402404785 s
+Generate all audited results <span class="nv">took</span> <span class="o">=</span> <span class="m">379</span>.73954820632935 <span class="nv">s</span>
+<span class="o">================================================================</span>
+The auditing processes are DONE!!!
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>4.3.2. Audited results folder<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="_images/demo3_folder.png" src="_images/demo3_folder.png" />
 </div>
 </div></blockquote>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>       .,,.

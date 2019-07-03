@@ -368,6 +368,11 @@ INPUT bars.png
 INPUT ./bars.png
 INPUT bars.png
 INPUT ./bars.png
+INPUT demo3_folder.png
+INPUT ./demo3_folder.png
+INPUT ./demo3_folder.png
+INPUT demo3_folder.png
+INPUT ./demo3_folder.png
 INPUT PySparkAudit.ind
 INPUT PySparkAudit.ind
 INPUT PySparkAudit.aux

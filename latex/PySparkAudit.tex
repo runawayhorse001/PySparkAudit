@@ -946,6 +946,90 @@ The following demos are designed to show how to use \sphinxcode{\sphinxupquote{P
 
 \section{Auditing function by function}
 \label{\detokenize{demo:auditing-function-by-function}}
+If you just need a piece of the audit result, you can call the corresponding function to generate it.
+There are 9 basic auditing functions, 3 figure plot functions and 3 summary functions in the PySparkAudit library.
+
+syntax
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+from PySparkAudit import *
+\end{sphinxVerbatim}
+\begin{enumerate}
+\def\theenumi{\arabic{enumi}}
+\def\labelenumi{\theenumi .}
+\makeatletter\def\p@enumii{\p@enumi \theenumi .}\makeatother
+\item {} 
+Basic Functions:
+\begin{enumerate}
+\def\theenumii{\alph{enumii}}
+\def\labelenumii{\theenumii .}
+\makeatletter\def\p@enumiii{\p@enumii \theenumii .}\makeatother
+\item {} 
+data\_types: \sphinxcode{\sphinxupquote{PySparkAudit.data\_types}}
+
+\item {} 
+dtypes\_class: \sphinxcode{\sphinxupquote{PySparkAudit.dtypes\_class}}
+
+\item {} 
+dtypes\_class: \sphinxcode{\sphinxupquote{PySparkAudit.counts}}
+
+\item {} 
+dtypes\_class: \sphinxcode{\sphinxupquote{PySparkAudit.describe}}
+
+\item {} 
+dtypes\_class: \sphinxcode{\sphinxupquote{PySparkAudit.percentiles}}
+
+\item {} 
+dtypes\_class: \sphinxcode{\sphinxupquote{PySparkAudit.feature\_len}}
+
+\item {} 
+dtypes\_class: \sphinxcode{\sphinxupquote{PySparkAudit.freq\_items}}
+
+\item {} 
+dtypes\_class: \sphinxcode{\sphinxupquote{PySparkAudit.rates}}
+
+\item {} 
+dtypes\_class: \sphinxcode{\sphinxupquote{PySparkAudit.corr\_matrix}}
+
+\end{enumerate}
+
+\item {} 
+Plot Functions:
+\begin{enumerate}
+\def\theenumii{\alph{enumii}}
+\def\labelenumii{\theenumii .}
+\makeatletter\def\p@enumiii{\p@enumii \theenumii .}\makeatother
+\item {} 
+hist\_plot: \sphinxcode{\sphinxupquote{PySparkAudit.hist\_plot}}
+
+\item {} 
+bar\_plot: \sphinxcode{\sphinxupquote{PySparkAudit.bar\_plot}}
+
+\item {} 
+trend\_plot: \sphinxcode{\sphinxupquote{PySparkAudit.trend\_plot}}
+
+\end{enumerate}
+
+\item {} 
+Summary Functions
+\begin{enumerate}
+\def\theenumii{\alph{enumii}}
+\def\labelenumii{\theenumii .}
+\makeatletter\def\p@enumiii{\p@enumii \theenumii .}\makeatother
+\item {} 
+dataset\_summary: \sphinxcode{\sphinxupquote{PySparkAudit.dataset\_summary}}
+
+\item {} 
+numeric\_summary: \sphinxcode{\sphinxupquote{PySparkAudit.numeric\_summary}}
+
+\item {} 
+category\_summary: \sphinxcode{\sphinxupquote{PySparkAudit.category\_summary}}
+
+\end{enumerate}
+
+\end{enumerate}
+
 For example:
 
 \fvset{hllines={, ,}}%
@@ -1233,6 +1317,149 @@ Barplots in \sphinxcode{\sphinxupquote{Bar\_plots.pdf}}
 \centering
 
 \noindent\sphinxincludegraphics{{bars}.png}
+\end{figure}
+\end{quote}
+
+
+\section{Auditing on Big Dataset}
+\label{\detokenize{demo:auditing-on-big-dataset}}
+In this section, we will demonstrate the auditing performance and audited results on the big data set.
+The data set is \sphinxcode{\sphinxupquote{Spanish High Speed Rail tickets pricing}}.  It is available at :
+\sphinxurl{https://www.kaggle.com/thegurus/spanish-high-speed-rail-system-ticket-pricing}. This data set has 2579771
+samples and 10 features.
+
+From the following CPU time, you will see most
+of the time was spent on plotting the histograms. If your time and memory are limited, we will suggest
+you to use \sphinxcode{\sphinxupquote{sample\_size}} to generate the subset of the the dataset to plot histograms.
+
+For example:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{pyspark.sql} \PYG{k+kn}{import} \PYG{n}{SparkSession}
+
+\PYG{n}{spark} \PYG{o}{=} \PYG{n}{SparkSession} \PYGZbs{}
+    \PYG{o}{.}\PYG{n}{builder} \PYGZbs{}
+    \PYG{o}{.}\PYG{n}{appName}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{Python Spark regression example}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)} \PYGZbs{}
+    \PYG{o}{.}\PYG{n}{config}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{spark.some.config.option}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{some\PYGZhy{}value}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)} \PYGZbs{}
+    \PYG{o}{.}\PYG{n}{getOrCreate}\PYG{p}{(}\PYG{p}{)}
+
+
+\PYG{c+c1}{\PYGZsh{} from PySparkAudit import dtypes\PYGZus{}class, hist\PYGZus{}plot, bar\PYGZus{}plot, freq\PYGZus{}items,feature\PYGZus{}len}
+\PYG{c+c1}{\PYGZsh{} from PySparkAudit import dataset\PYGZus{}summary, rates, trend\PYGZus{}plot}
+
+\PYG{c+c1}{\PYGZsh{} Audited results output path}
+\PYG{n}{out\PYGZus{}path} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{/home/feng/Desktop}\PYG{l+s+s1}{\PYGZsq{}}
+
+\PYG{c+c1}{\PYGZsh{} import PySpark Audit function}
+\PYG{k+kn}{from} \PYG{n+nn}{PySparkAudit} \PYG{k+kn}{import} \PYG{n}{auditing}
+
+\PYG{c+c1}{\PYGZsh{} load dataset}
+\PYG{c+c1}{\PYGZsh{} Spanish High Speed Rail tickets pricing \PYGZhy{} Renfe (\PYGZti{}2.58M)}
+\PYG{c+c1}{\PYGZsh{} https://www.kaggle.com/thegurus/spanish\PYGZhy{}high\PYGZhy{}speed\PYGZhy{}rail\PYGZhy{}system\PYGZhy{}ticket\PYGZhy{}pricing}
+
+\PYG{n}{data} \PYG{o}{=} \PYG{n}{spark}\PYG{o}{.}\PYG{n}{read}\PYG{o}{.}\PYG{n}{csv}\PYG{p}{(}\PYG{n}{path}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{/home/feng/Downloads/renfe.csv}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}
+                      \PYG{n}{sep}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{encoding}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{UTF\PYGZhy{}8}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{comment}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{header}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{inferSchema}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} auditing in one function}
+\PYG{n}{auditing}\PYG{p}{(}\PYG{n}{data}\PYG{p}{,} \PYG{n}{output\PYGZus{}dir}\PYG{o}{=}\PYG{n}{out\PYGZus{}path}\PYG{p}{,} \PYG{n}{tracking}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+Result:
+
+
+\subsection{print in bash}
+\label{\detokenize{demo:id1}}
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}
+The audited results summary audited\PYGZus{}results.xlsx was located at:
+/home/feng/Desktop/Audited
+Generate data \PYG{n+nb}{set} summary \PYG{n+nv}{took} \PYG{o}{=} \PYG{l+m}{60}.535009145736694 \PYG{n+nv}{s}
+\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}
+Collecting data types.... Please be patient!
+Generate counts \PYG{n+nv}{took} \PYG{o}{=} \PYG{l+m}{0}.0016515254974365234 \PYG{n+nv}{s}
+\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}
+Collecting features\PYG{l+s+s1}{\PYGZsq{} counts.... Please be patient!}
+\PYG{l+s+s1}{Generate counts took = 6.502962350845337 s}
+\PYG{l+s+s1}{================================================================}
+\PYG{l+s+s1}{Collecting data frame description.... Please be patient!}
+\PYG{l+s+s1}{Generate data frame description took = 1.5562639236450195 s}
+\PYG{l+s+s1}{================================================================}
+\PYG{l+s+s1}{Calculating percentiles.... Please be patient!}
+\PYG{l+s+s1}{Generate percentiles took = 19.76785445213318 s}
+\PYG{l+s+s1}{================================================================}
+\PYG{l+s+s1}{Calculating features\PYGZsq{}} length.... Please be patient!
+Generate features\PYG{l+s+s1}{\PYGZsq{} length took = 4.953453540802002 s}
+\PYG{l+s+s1}{================================================================}
+\PYG{l+s+s1}{Calculating top 5 frequent items.... Please be patient!}
+\PYG{l+s+s1}{Generate rates took: 4.761325359344482 s}
+\PYG{l+s+s1}{================================================================}
+\PYG{l+s+s1}{Calculating rates.... Please be patient!}
+\PYG{l+s+s1}{Generate rates took: 17.201056718826294 s}
+\PYG{l+s+s1}{Auditing numerical data took = 54.77840781211853 s}
+\PYG{l+s+s1}{================================================================}
+\PYG{l+s+s1}{Collecting data types.... Please be patient!}
+\PYG{l+s+s1}{Generate counts took = 0.001623392105102539 s}
+\PYG{l+s+s1}{================================================================}
+\PYG{l+s+s1}{Collecting features\PYGZsq{}} counts.... Please be patient!
+Generate counts \PYG{n+nv}{took} \PYG{o}{=} \PYG{l+m}{12}.59226107597351 \PYG{n+nv}{s}
+\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}
+Calculating features\PYG{l+s+s1}{\PYGZsq{} length.... Please be patient!}
+\PYG{l+s+s1}{Generate features\PYGZsq{}} length \PYG{n+nv}{took} \PYG{o}{=} \PYG{l+m}{5}.332952976226807 \PYG{n+nv}{s}
+\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}
+Calculating top \PYG{l+m}{5} frequent items.... Please be patient!
+Generate rates took: \PYG{l+m}{6}.832213878631592 \PYG{n+nv}{s}
+\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}
+Calculating rates.... Please be patient!
+Generate rates took: \PYG{l+m}{23}.704302072525024 s
+Auditing categorical data \PYG{n+nv}{took} \PYG{o}{=} \PYG{l+m}{48}.484763622283936 \PYG{n+nv}{s}
+\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}
+The correlation matrix plot Corr.png was located at:
+/home/feng/Desktop/Audited
+Calculating correlation matrix... Please be patient!
+Generate correlation matrix \PYG{n+nv}{took} \PYG{o}{=} \PYG{l+m}{19}.61273431777954 \PYG{n+nv}{s}
+\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}
+The Histograms plots *.png were located at:
+/home/feng/Desktop/Audited/02\PYGZhy{}hist
+Plotting histograms of \PYGZus{}c0.... Please be patient!
+Plotting histograms of price.... Please be patient!
+Histograms plots are DONE!!!
+Generate histograms plots \PYG{n+nv}{took} \PYG{o}{=} \PYG{l+m}{160}.3421311378479 \PYG{n+nv}{s}
+\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}
+The Bar plot Bar\PYGZus{}plots.pdf was located at:
+/home/feng/Desktop/Audited
+Plotting barplot of origin.... Please be patient!
+Plotting barplot of destination.... Please be patient!
+Plotting barplot of train\PYGZus{}type.... Please be patient!
+Plotting barplot of train\PYGZus{}class.... Please be patient!
+Plotting barplot of fare.... Please be patient!
+Plotting barplot of insert\PYGZus{}date.... Please be patient!
+Plotting barplot of start\PYGZus{}date.... Please be patient!
+Plotting barplot of end\PYGZus{}date.... Please be patient!
+Bar plots are DONE!!!
+Generate bar plots \PYG{n+nv}{took} \PYG{o}{=} \PYG{l+m}{24}.17994236946106 \PYG{n+nv}{s}
+\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}
+The Trend plot Trend\PYGZus{}plots.pdf was located at:
+/home/feng/Desktop/Audited
+Plotting trend plot of \PYGZus{}c0.... Please be patient!
+Plotting trend plot of price.... Please be patient!
+Trend plots are DONE!!!
+Generate trend plots \PYG{n+nv}{took} \PYG{o}{=} \PYG{l+m}{11}.697550296783447 s
+Generate all the figures \PYG{n+nv}{took} \PYG{o}{=} \PYG{l+m}{196}.25823402404785 s
+Generate all audited results \PYG{n+nv}{took} \PYG{o}{=} \PYG{l+m}{379}.73954820632935 \PYG{n+nv}{s}
+\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}\PYG{o}{=}
+The auditing processes are DONE!!!
+\end{sphinxVerbatim}
+
+
+\subsection{Audited results folder}
+\label{\detokenize{demo:id2}}\begin{quote}
+
+\begin{figure}[htbp]
+\centering
+
+\noindent\sphinxincludegraphics{{demo3_folder}.png}
 \end{figure}
 \end{quote}
 

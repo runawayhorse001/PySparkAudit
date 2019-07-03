@@ -43,7 +43,10 @@
 \contentsline {chapter}{\numberline {4}Auditing Demos}{19}{chapter.4}
 \contentsline {section}{\numberline {4.1}Auditing function by function}{19}{section.4.1}
 \contentsline {section}{\numberline {4.2}Auditing in one function}{21}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}print in bash}{22}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}Audited results folder}{23}{subsection.4.2.2}
-\contentsline {chapter}{\numberline {5}Main Reference}{31}{chapter.5}
-\contentsline {chapter}{Bibliography}{33}{chapter*.4}
+\contentsline {subsection}{\numberline {4.2.1}print in bash}{23}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Audited results folder}{24}{subsection.4.2.2}
+\contentsline {section}{\numberline {4.3}Auditing on Big Dataset}{29}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}print in bash}{31}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}Audited results folder}{32}{subsection.4.3.2}
+\contentsline {chapter}{\numberline {5}Main Reference}{35}{chapter.5}
+\contentsline {chapter}{Bibliography}{37}{chapter*.4}
