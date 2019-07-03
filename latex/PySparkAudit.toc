@@ -21,32 +21,32 @@
 \contentsline {subsection}{\numberline {3.1.3}df\_merge}{9}{subsection.3.1.3}
 \contentsline {subsection}{\numberline {3.1.4}data\_types}{10}{subsection.3.1.4}
 \contentsline {subsection}{\numberline {3.1.5}dtypes\_class}{10}{subsection.3.1.5}
-\contentsline {subsection}{\numberline {3.1.6}counts}{10}{subsection.3.1.6}
-\contentsline {subsection}{\numberline {3.1.7}describe}{10}{subsection.3.1.7}
-\contentsline {subsection}{\numberline {3.1.8}percentiles}{11}{subsection.3.1.8}
-\contentsline {subsection}{\numberline {3.1.9}feature\_len}{11}{subsection.3.1.9}
-\contentsline {subsection}{\numberline {3.1.10}freq\_items}{11}{subsection.3.1.10}
-\contentsline {subsection}{\numberline {3.1.11}rates}{12}{subsection.3.1.11}
-\contentsline {subsection}{\numberline {3.1.12}corr\_matrix}{12}{subsection.3.1.12}
-\contentsline {section}{\numberline {3.2}Plot Functions}{13}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}hist\_plot}{13}{subsection.3.2.1}
-\contentsline {subsection}{\numberline {3.2.2}bar\_plot}{13}{subsection.3.2.2}
-\contentsline {subsection}{\numberline {3.2.3}trend\_plot}{14}{subsection.3.2.3}
-\contentsline {section}{\numberline {3.3}Summary Functions}{14}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}dataset\_summary}{14}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}numeric\_summary}{15}{subsection.3.3.2}
-\contentsline {subsection}{\numberline {3.3.3}category\_summary}{15}{subsection.3.3.3}
-\contentsline {section}{\numberline {3.4}Auditing Function}{16}{section.3.4}
-\contentsline {subsection}{\numberline {3.4.1}auditing}{16}{subsection.3.4.1}
-\contentsline {section}{\numberline {3.5}Plotting Function}{17}{section.3.5}
-\contentsline {subsection}{\numberline {3.5.1}fig\_plots}{17}{subsection.3.5.1}
-\contentsline {chapter}{\numberline {4}Auditing Demos}{19}{chapter.4}
-\contentsline {section}{\numberline {4.1}Auditing function by function}{19}{section.4.1}
-\contentsline {section}{\numberline {4.2}Auditing in one function}{21}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}print in bash}{23}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}Audited results folder}{24}{subsection.4.2.2}
-\contentsline {section}{\numberline {4.3}Auditing on Big Dataset}{29}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}print in bash}{31}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}Audited results folder}{32}{subsection.4.3.2}
-\contentsline {chapter}{\numberline {5}Main Reference}{35}{chapter.5}
-\contentsline {chapter}{Bibliography}{37}{chapter*.4}
+\contentsline {subsection}{\numberline {3.1.6}counts}{11}{subsection.3.1.6}
+\contentsline {subsection}{\numberline {3.1.7}describe}{12}{subsection.3.1.7}
+\contentsline {subsection}{\numberline {3.1.8}percentiles}{13}{subsection.3.1.8}
+\contentsline {subsection}{\numberline {3.1.9}feature\_len}{14}{subsection.3.1.9}
+\contentsline {subsection}{\numberline {3.1.10}freq\_items}{15}{subsection.3.1.10}
+\contentsline {subsection}{\numberline {3.1.11}rates}{16}{subsection.3.1.11}
+\contentsline {subsection}{\numberline {3.1.12}corr\_matrix}{17}{subsection.3.1.12}
+\contentsline {section}{\numberline {3.2}Plot Functions}{18}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}hist\_plot}{18}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}bar\_plot}{18}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}trend\_plot}{19}{subsection.3.2.3}
+\contentsline {section}{\numberline {3.3}Summary Functions}{19}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}dataset\_summary}{19}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}numeric\_summary}{20}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}category\_summary}{20}{subsection.3.3.3}
+\contentsline {section}{\numberline {3.4}Auditing Function}{21}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}auditing}{21}{subsection.3.4.1}
+\contentsline {section}{\numberline {3.5}Plotting Function}{22}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}fig\_plots}{22}{subsection.3.5.1}
+\contentsline {chapter}{\numberline {4}Auditing Demos}{23}{chapter.4}
+\contentsline {section}{\numberline {4.1}Auditing function by function}{23}{section.4.1}
+\contentsline {section}{\numberline {4.2}Auditing in one function}{25}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}print in bash}{27}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Audited results folder}{28}{subsection.4.2.2}
+\contentsline {section}{\numberline {4.3}Auditing on Big Dataset}{33}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}print in bash}{35}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}Audited results folder}{36}{subsection.4.3.2}
+\contentsline {chapter}{\numberline {5}Main Reference}{39}{chapter.5}
+\contentsline {chapter}{Bibliography}{41}{chapter*.4}

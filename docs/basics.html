@@ -254,7 +254,7 @@
 <h3>3.1.4. data_types<a class="headerlink" href="#data-types" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt>
-<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">data_types</code><span class="sig-paren">(</span><em>df_in</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L56-L75"><span class="viewcode-link">[source]</span></a></dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">data_types</code><span class="sig-paren">(</span><em>df_in</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L56-L95"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Generate the data types of the rdd data frame.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -271,6 +271,27 @@
 </tr>
 </tbody>
 </table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">([</span>
+<span class="go">                    (&#39;Joe&#39;, 67, &#39;F&#39;, 7000, &#39;asymptomatic&#39;, 286.1, &#39;2019-6-28&#39;),</span>
+<span class="go">                    (&#39;Henry&#39;, 67, &#39;M&#39;, 8000, &#39;asymptomatic&#39;, 229.2, &#39;2019-6-29&#39;),</span>
+<span class="go">                    (&#39;Sam&#39;, 37,  &#39;F&#39;, 6000, &#39;nonanginal&#39;, 250.3, &#39;2019-6-30&#39;),</span>
+<span class="go">                    (&#39;Max&#39;, 56, &#39;M&#39;, 9000, &#39;nontypical&#39;, 236.4, &#39;2019-5-28&#39;),</span>
+<span class="go">                    (&#39;Mat&#39;, 56, &#39;F&#39;, 9000, &#39;asymptomatic&#39;, 254.5, &#39;2019-4-28&#39;)],</span>
+<span class="go">                    [&#39;Name&#39;, &#39;Age&#39;, &#39;Sex&#39;, &#39;Sallary&#39;, &#39;ChestPain&#39;, &#39;Chol&#39;, &#39;CreatDate&#39;]</span>
+<span class="go">                   )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s1">&#39;CreatDate&#39;</span><span class="p">,</span> <span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;CreatDate&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="s1">&#39;timestamp&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="k">import</span> <span class="n">data_types</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_types</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="go">     feature     dtypes</span>
+<span class="go">0       Name     string</span>
+<span class="go">1        Age     bigint</span>
+<span class="go">2        Sex     string</span>
+<span class="go">3    Sallary     bigint</span>
+<span class="go">4  ChestPain     string</span>
+<span class="go">5       Chol     double</span>
+<span class="go">6  CreatDate  timestamp</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>
@@ -278,7 +299,7 @@
 <h3>3.1.5. dtypes_class<a class="headerlink" href="#dtypes-class" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt>
-<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">dtypes_class</code><span class="sig-paren">(</span><em>df_in</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L78-L114"><span class="viewcode-link">[source]</span></a></dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">dtypes_class</code><span class="sig-paren">(</span><em>df_in</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L98-L157"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Generate the data type categories: numerical, categorical, date and unsupported category.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -290,6 +311,30 @@
 </tr>
 </tbody>
 </table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">([</span>
+<span class="go">                    (&#39;Joe&#39;, 67, &#39;F&#39;, 7000, &#39;asymptomatic&#39;, 286.1, &#39;2019-6-28&#39;),</span>
+<span class="go">                    (&#39;Henry&#39;, 67, &#39;M&#39;, 8000, &#39;asymptomatic&#39;, 229.2, &#39;2019-6-29&#39;),</span>
+<span class="go">                    (&#39;Sam&#39;, 37,  &#39;F&#39;, 6000, &#39;nonanginal&#39;, 250.3, &#39;2019-6-30&#39;),</span>
+<span class="go">                    (&#39;Max&#39;, 56, &#39;M&#39;, 9000, &#39;nontypical&#39;, 236.4, &#39;2019-5-28&#39;),</span>
+<span class="go">                    (&#39;Mat&#39;, 56, &#39;F&#39;, 9000, &#39;asymptomatic&#39;, 254.5, &#39;2019-4-28&#39;)],</span>
+<span class="go">                    [&#39;Name&#39;, &#39;Age&#39;, &#39;Sex&#39;, &#39;Sallary&#39;, &#39;ChestPain&#39;, &#39;Chol&#39;, &#39;CreatDate&#39;]</span>
+<span class="go">                   )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s1">&#39;CreatDate&#39;</span><span class="p">,</span> <span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;CreatDate&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="s1">&#39;timestamp&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="k">import</span> <span class="n">dtypes_class</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dtypes_class</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="go">(     feature       DataType</span>
+<span class="go">0       Name     StringType</span>
+<span class="go">1        Age       LongType</span>
+<span class="go">2        Sex     StringType</span>
+<span class="go">3    Sallary       LongType</span>
+<span class="go">4  ChestPain     StringType</span>
+<span class="go">5       Chol     DoubleType</span>
+<span class="go">6  CreatDate  TimestampType,</span>
+<span class="go">[&#39;Age&#39;, &#39;Sallary&#39;, &#39;Chol&#39;],</span>
+<span class="go">[&#39;Name&#39;, &#39;Sex&#39;, &#39;ChestPain&#39;],</span>
+<span class="go">[&#39;CreatDate&#39;], [])</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>
@@ -297,7 +342,7 @@
 <h3>3.1.6. counts<a class="headerlink" href="#counts" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt>
-<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">counts</code><span class="sig-paren">(</span><em>df_in</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L117-L140"><span class="viewcode-link">[source]</span></a></dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">counts</code><span class="sig-paren">(</span><em>df_in</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L160-L203"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Generate the row counts and not null rows and distinct counts for each feature.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -314,6 +359,27 @@
 </tr>
 </tbody>
 </table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">([</span>
+<span class="go">                    (&#39;Joe&#39;, None, &#39;F&#39;, 70000, &#39;asymptomatic&#39;, 286.1, &#39;2019-6-28&#39;),</span>
+<span class="go">                    (&#39;Henry&#39;, 67, &#39;M&#39;, 80000, &#39;asymptomatic&#39;, 229.2, &#39;2019-6-29&#39;),</span>
+<span class="go">                    (&#39;Sam&#39;, 37,  &#39;F&#39;, 60000, &#39;nonanginal&#39;, 250.3, &#39;2019-6-30&#39;),</span>
+<span class="go">                    (&#39;Max&#39;, 56, &#39;  &#39;, 90000, None, 236.4, &#39;2019-5-28&#39;),</span>
+<span class="go">                    (&#39;Mat&#39;, 56, &#39;F&#39;, None, &#39;asymptomatic&#39;, 254.5, &#39;2019-4-28&#39;)],</span>
+<span class="go">                    [&#39;Name&#39;, &#39;Age&#39;, &#39;Sex&#39;, &#39;Sallary&#39;, &#39;ChestPain&#39;, &#39;Chol&#39;, &#39;CreatDate&#39;]</span>
+<span class="go">                   )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s1">&#39;CreatDate&#39;</span><span class="p">,</span> <span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;CreatDate&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="s1">&#39;timestamp&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="k">import</span> <span class="n">counts</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">counts</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="go">     feature  row_count  notnull_count  distinct_count</span>
+<span class="go">0       Name          5              5               5</span>
+<span class="go">1        Age          5              4               3</span>
+<span class="go">2        Sex          5              5               3</span>
+<span class="go">3    Sallary          5              4               4</span>
+<span class="go">4  ChestPain          5              4               2</span>
+<span class="go">5       Chol          5              5               5</span>
+<span class="go">6  CreatDate          5              5               5</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>
@@ -321,7 +387,7 @@
 <h3>3.1.7. describe<a class="headerlink" href="#describe" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt>
-<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">describe</code><span class="sig-paren">(</span><em>df_in</em>, <em>columns=None</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L143-L165"><span class="viewcode-link">[source]</span></a></dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">describe</code><span class="sig-paren">(</span><em>df_in</em>, <em>columns=None</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L206-L251"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Generate the simple data frame description using <img class="math" src="_images/math/8563570bd9327c56f41e9b5d4e9841e248e3491a.png" alt=".describe()"/> function in pyspark.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -339,6 +405,29 @@
 </tr>
 </tbody>
 </table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">([</span>
+<span class="go">                    (&#39;Joe&#39;, 67, &#39;F&#39;, 7000, &#39;asymptomatic&#39;, 286.1, &#39;2019-6-28&#39;),</span>
+<span class="go">                    (&#39;Henry&#39;, 67, &#39;M&#39;, 8000, &#39;asymptomatic&#39;, 229.2, &#39;2019-6-29&#39;),</span>
+<span class="go">                    (&#39;Sam&#39;, 37,  &#39;F&#39;, 6000, &#39;nonanginal&#39;, 250.3, &#39;2019-6-30&#39;),</span>
+<span class="go">                    (&#39;Max&#39;, 56, &#39;M&#39;, 9000, &#39;nontypical&#39;, 236.4, &#39;2019-5-28&#39;),</span>
+<span class="go">                    (&#39;Mat&#39;, 56, &#39;F&#39;, 9000, &#39;asymptomatic&#39;, 254.5, &#39;2019-4-28&#39;)],</span>
+<span class="go">                    [&#39;Name&#39;, &#39;Age&#39;, &#39;Sex&#39;, &#39;Sallary&#39;, &#39;ChestPain&#39;, &#39;Chol&#39;, &#39;CreatDate&#39;]</span>
+<span class="go">                   )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s1">&#39;CreatDate&#39;</span><span class="p">,</span> <span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">&#39;CreatDate&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="s1">&#39;timestamp&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="k">import</span> <span class="n">describe</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">describe</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="go">summary   count     mean     ...               min         max</span>
+<span class="go">feature                      ...</span>
+<span class="go">Name          5     None     ...             Henry         Sam</span>
+<span class="go">Age           5     56.6     ...                37          67</span>
+<span class="go">Sex           5     None     ...                 F           M</span>
+<span class="go">Sallary       5  78000.0     ...             60000       90000</span>
+<span class="go">ChestPain     5     None     ...      asymptomatic  nontypical</span>
+<span class="go">Chol          5    251.3     ...             229.2       286.1</span>
+<span class="go">CreatDate     5     None     ...         2019-4-28   2019-6-30</span>
+</pre></div>
+</div>
+<p>[7 rows x 5 columns]</p>
 </dd></dl>
 
 </div>
@@ -346,7 +435,7 @@
 <h3>3.1.8. percentiles<a class="headerlink" href="#percentiles" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt>
-<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">percentiles</code><span class="sig-paren">(</span><em>df_in</em>, <em>deciles=False</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L168-L197"><span class="viewcode-link">[source]</span></a></dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">percentiles</code><span class="sig-paren">(</span><em>df_in</em>, <em>deciles=False</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L254-L301"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Generate the percentiles for rdd data frame.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -364,6 +453,22 @@
 </tr>
 </tbody>
 </table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">([</span>
+<span class="go">                    (&#39;Joe&#39;, 67, &#39;F&#39;, 7000, &#39;asymptomatic&#39;, 286.1, &#39;2019-6-28&#39;),</span>
+<span class="go">                    (&#39;Henry&#39;, 67, &#39;M&#39;, 8000, &#39;asymptomatic&#39;, 229.2, &#39;2019-6-29&#39;),</span>
+<span class="go">                    (&#39;Sam&#39;, 37,  &#39;F&#39;, 6000, &#39;nonanginal&#39;, 250.3, &#39;2019-6-30&#39;),</span>
+<span class="go">                    (&#39;Max&#39;, 56, &#39;M&#39;, 9000, &#39;nontypical&#39;, 236.4, &#39;2019-5-28&#39;),</span>
+<span class="go">                    (&#39;Mat&#39;, 56, &#39;F&#39;, 9000, &#39;asymptomatic&#39;, 254.5, &#39;2019-4-28&#39;)],</span>
+<span class="go">                    [&#39;Name&#39;, &#39;Age&#39;, &#39;Sex&#39;, &#39;Sallary&#39;, &#39;ChestPain&#39;, &#39;Chol&#39;, &#39;CreatDate&#39;]</span>
+<span class="go">                   )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="k">import</span> <span class="n">percentiles</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">percentiles</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="go">   feature       Q1      Med       Q3</span>
+<span class="go">0      Age     56.0     67.0     67.0</span>
+<span class="go">1  Sallary  80000.0  90000.0  90000.0</span>
+<span class="go">2     Chol    250.3    254.5    286.1</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>
@@ -371,7 +476,7 @@
 <h3>3.1.9. feature_len<a class="headerlink" href="#feature-len" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt>
-<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">feature_len</code><span class="sig-paren">(</span><em>df_in</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L200-L225"><span class="viewcode-link">[source]</span></a></dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">feature_len</code><span class="sig-paren">(</span><em>df_in</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L304-L348"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Generate feature length statistical results for each feature in the rdd data frame.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -388,6 +493,26 @@
 </tr>
 </tbody>
 </table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">([</span>
+<span class="go">                    (&#39;Joe&#39;, 67, &#39;F&#39;, 7000, &#39;asymptomatic&#39;, 286.1, &#39;2019-6-28&#39;),</span>
+<span class="go">                    (&#39;Henry&#39;, 67, &#39;M&#39;, 8000, &#39;asymptomatic&#39;, 229.2, &#39;2019-6-29&#39;),</span>
+<span class="go">                    (&#39;Sam&#39;, 37,  &#39;F&#39;, 6000, &#39;nonanginal&#39;, 250.3, &#39;2019-6-30&#39;),</span>
+<span class="go">                    (&#39;Max&#39;, 56, &#39;M&#39;, 9000, &#39;nontypical&#39;, 236.4, &#39;2019-5-28&#39;),</span>
+<span class="go">                    (&#39;Mat&#39;, 56, &#39;F&#39;, 9000, &#39;asymptomatic&#39;, 254.5, &#39;2019-4-28&#39;)],</span>
+<span class="go">                    [&#39;Name&#39;, &#39;Age&#39;, &#39;Sex&#39;, &#39;Sallary&#39;, &#39;ChestPain&#39;, &#39;Chol&#39;, &#39;CreatDate&#39;]</span>
+<span class="go">                   )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="k">import</span> <span class="n">feature_len</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">feature_len</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="go">     feature  min_length  avg_length  max_length</span>
+<span class="go">0       Name         3.0         3.4         5.0</span>
+<span class="go">1        Age         2.0         2.0         2.0</span>
+<span class="go">2        Sex         1.0         1.0         1.0</span>
+<span class="go">3    Sallary         5.0         5.0         5.0</span>
+<span class="go">4  ChestPain        10.0        11.2        12.0</span>
+<span class="go">5       Chol         5.0         5.0         5.0</span>
+<span class="go">6  CreatDate         9.0         9.0         9.0</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>
@@ -395,7 +520,7 @@
 <h3>3.1.10. freq_items<a class="headerlink" href="#freq-items" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt>
-<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">freq_items</code><span class="sig-paren">(</span><em>df_in</em>, <em>top_n=5</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L228-L249"><span class="viewcode-link">[source]</span></a></dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">freq_items</code><span class="sig-paren">(</span><em>df_in</em>, <em>top_n=5</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L351-L391"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Generate the top_n frequent items in for each feature in the rdd data frame.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -413,6 +538,26 @@
 </tr>
 </tbody>
 </table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">([</span>
+<span class="go">                    (&#39;Joe&#39;, 67, &#39;F&#39;, 7000, &#39;asymptomatic&#39;, 286.1, &#39;2019-6-28&#39;),</span>
+<span class="go">                    (&#39;Henry&#39;, 67, &#39;M&#39;, 8000, &#39;asymptomatic&#39;, 229.2, &#39;2019-6-29&#39;),</span>
+<span class="go">                    (&#39;Sam&#39;, 37,  &#39;F&#39;, 6000, &#39;nonanginal&#39;, 250.3, &#39;2019-6-30&#39;),</span>
+<span class="go">                    (&#39;Max&#39;, 56, &#39;M&#39;, 9000, &#39;nontypical&#39;, 236.4, &#39;2019-5-28&#39;),</span>
+<span class="go">                    (&#39;Mat&#39;, 56, &#39;F&#39;, 9000, &#39;asymptomatic&#39;, 254.5, &#39;2019-4-28&#39;)],</span>
+<span class="go">                    [&#39;Name&#39;, &#39;Age&#39;, &#39;Sex&#39;, &#39;Sallary&#39;, &#39;ChestPain&#39;, &#39;Chol&#39;, &#39;CreatDate&#39;]</span>
+<span class="go">                   )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="k">import</span> <span class="n">freq_items</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">freq_items</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="go">     feature                            freq_items[value, freq]</span>
+<span class="go">0       Name  [[Joe, 1], [Mat, 1], [Henry, 1], [Sam, 1], [Ma...</span>
+<span class="go">1        Age                        [[67, 2], [56, 2], [37, 1]]</span>
+<span class="go">2        Sex                                   [[F, 3], [M, 2]]</span>
+<span class="go">3    Sallary   [[90000, 2], [70000, 1], [80000, 1], [60000, 1]]</span>
+<span class="go">4  ChestPain  [[asymptomatic, 3], [nontypical, 1], [nonangin...</span>
+<span class="go">5       Chol  [[286.1, 1], [250.3, 1], [229.2, 1], [236.4, 1...</span>
+<span class="go">6  CreatDate  [[2019-6-30, 1], [2019-5-28, 1], [2019-4-28, 1...</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>
@@ -420,7 +565,7 @@
 <h3>3.1.11. rates<a class="headerlink" href="#rates" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt>
-<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">rates</code><span class="sig-paren">(</span><em>df_in</em>, <em>columns=None</em>, <em>numeric=True</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L252-L308"><span class="viewcode-link">[source]</span></a></dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">rates</code><span class="sig-paren">(</span><em>df_in</em>, <em>columns=None</em>, <em>numeric=True</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L394-L471"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Generate the null, empty, negative, zero and  positive value rates and feature variance for
 each feature in the rdd data frame.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -441,6 +586,27 @@ in pandas data frame</p>
 </tr>
 </tbody>
 </table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">([</span>
+<span class="go">                    (&#39;Joe&#39;, 67, &#39;F&#39;, 7000, &#39;asymptomatic&#39;, 286.1, &#39;2019-6-28&#39;),</span>
+<span class="go">                    (&#39;Henry&#39;, 67, &#39;M&#39;, 8000, &#39;asymptomatic&#39;, 229.2, &#39;2019-6-29&#39;),</span>
+<span class="go">                    (&#39;Sam&#39;, 37,  &#39;F&#39;, 6000, &#39;nonanginal&#39;, 250.3, &#39;2019-6-30&#39;),</span>
+<span class="go">                    (&#39;Max&#39;, 56, &#39;M&#39;, 9000, &#39;nontypical&#39;, 236.4, &#39;2019-5-28&#39;),</span>
+<span class="go">                    (&#39;Mat&#39;, 56, &#39;F&#39;, 9000, &#39;asymptomatic&#39;, 254.5, &#39;2019-4-28&#39;)],</span>
+<span class="go">                    [&#39;Name&#39;, &#39;Age&#39;, &#39;Sex&#39;, &#39;Sallary&#39;, &#39;ChestPain&#39;, &#39;Chol&#39;, &#39;CreatDate&#39;]</span>
+<span class="go">                   )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="k">import</span> <span class="n">rates</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rates</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="go">     feature  feature_variance    ...     rate_zero  rate_pos</span>
+<span class="go">0        Age               0.6    ...           0.0       1.0</span>
+<span class="go">1    Sallary               0.8    ...           0.0       1.0</span>
+<span class="go">2       Chol               1.0    ...           0.0       1.0</span>
+<span class="go">3       Name               1.0    ...           0.0       0.0</span>
+<span class="go">4        Sex               0.4    ...           0.0       0.0</span>
+<span class="go">5  ChestPain               0.6    ...           0.0       0.0</span>
+<span class="go">6  CreatDate               1.0    ...           0.0       0.0</span>
+</pre></div>
+</div>
+<p>[7 rows x 7 columns]</p>
 </dd></dl>
 
 </div>
@@ -448,7 +614,7 @@ in pandas data frame</p>
 <h3>3.1.12. corr_matrix<a class="headerlink" href="#corr-matrix" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt>
-<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">corr_matrix</code><span class="sig-paren">(</span><em>df_in</em>, <em>method='pearson'</em>, <em>output_dir=None</em>, <em>rotation=True</em>, <em>display=False</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L311-L369"><span class="viewcode-link">[source]</span></a></dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">corr_matrix</code><span class="sig-paren">(</span><em>df_in</em>, <em>method='pearson'</em>, <em>output_dir=None</em>, <em>rotation=True</em>, <em>display=False</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L474-L549"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Generate the correlation matrix and heat map plot for rdd data frame.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -470,6 +636,25 @@ the default value is pearson</li>
 </tr>
 </tbody>
 </table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">([</span>
+<span class="go">                    (&#39;Joe&#39;, 67, &#39;F&#39;, 7000, &#39;asymptomatic&#39;, 286.1, &#39;2019-6-28&#39;),</span>
+<span class="go">                    (&#39;Henry&#39;, 67, &#39;M&#39;, 8000, &#39;asymptomatic&#39;, 229.2, &#39;2019-6-29&#39;),</span>
+<span class="go">                    (&#39;Sam&#39;, 37,  &#39;F&#39;, 6000, &#39;nonanginal&#39;, 250.3, &#39;2019-6-30&#39;),</span>
+<span class="go">                    (&#39;Max&#39;, 56, &#39;M&#39;, 9000, &#39;nontypical&#39;, 236.4, &#39;2019-5-28&#39;),</span>
+<span class="go">                    (&#39;Mat&#39;, 56, &#39;F&#39;, 9000, &#39;asymptomatic&#39;, 254.5, &#39;2019-4-28&#39;)],</span>
+<span class="go">                    [&#39;Name&#39;, &#39;Age&#39;, &#39;Sex&#39;, &#39;Sallary&#39;, &#39;ChestPain&#39;, &#39;Chol&#39;, &#39;CreatDate&#39;]</span>
+<span class="go">                   )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">PySparkAudit</span> <span class="k">import</span> <span class="n">corr_matrix</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">corr_matrix</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="go">================================================================</span>
+<span class="go">The correlation matrix plot Corr.png was located at:</span>
+<span class="go">/home/feng/Audited</span>
+<span class="go">              Age   Sallary      Chol</span>
+<span class="go">Age      1.000000  0.431663  0.147226</span>
+<span class="go">Sallary  0.431663  1.000000 -0.388171</span>
+<span class="go">Chol     0.147226 -0.388171  1.000000</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>
@@ -480,7 +665,7 @@ the default value is pearson</li>
 <h3>3.2.1. hist_plot<a class="headerlink" href="#hist-plot" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt>
-<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">hist_plot</code><span class="sig-paren">(</span><em>df_in</em>, <em>bins=50</em>, <em>output_dir=None</em>, <em>sample_size=None</em>, <em>display=False</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L372-L461"><span class="viewcode-link">[source]</span></a></dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">hist_plot</code><span class="sig-paren">(</span><em>df_in</em>, <em>bins=50</em>, <em>output_dir=None</em>, <em>sample_size=None</em>, <em>display=False</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L552-L641"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Histogram plot for the numerical features in the rdd data frame. <strong>This part is super time and
 memory consuming.</strong> If the data size is larger than 10,000, the histograms will be saved in .pdf
 format. Otherwise, the histograms will be saved in .png format in hist folder.</p>
@@ -510,7 +695,7 @@ default value none</li>
 <h3>3.2.2. bar_plot<a class="headerlink" href="#bar-plot" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt>
-<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">bar_plot</code><span class="sig-paren">(</span><em>df_in</em>, <em>top_n=20</em>, <em>rotation=True</em>, <em>output_dir=None</em>, <em>display=False</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L464-L519"><span class="viewcode-link">[source]</span></a></dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">bar_plot</code><span class="sig-paren">(</span><em>df_in</em>, <em>top_n=20</em>, <em>rotation=True</em>, <em>output_dir=None</em>, <em>display=False</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L644-L699"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Bar plot for the categorical features in the rdd data frame.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -535,7 +720,7 @@ default value none</li>
 <h3>3.2.3. trend_plot<a class="headerlink" href="#trend-plot" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt>
-<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">trend_plot</code><span class="sig-paren">(</span><em>df_in</em>, <em>types='day'</em>, <em>d_time=None</em>, <em>rotation=True</em>, <em>output_dir=None</em>, <em>display=False</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L522-L599"><span class="viewcode-link">[source]</span></a></dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">trend_plot</code><span class="sig-paren">(</span><em>df_in</em>, <em>types='day'</em>, <em>d_time=None</em>, <em>rotation=True</em>, <em>output_dir=None</em>, <em>display=False</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L702-L779"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Trend plot for the aggregated time series data if the rdd data frame has date features and numerical features.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -565,7 +750,7 @@ is the first date feature in the rdd data frame</li>
 <h3>3.3.1. dataset_summary<a class="headerlink" href="#dataset-summary" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt>
-<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">dataset_summary</code><span class="sig-paren">(</span><em>df_in</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L602-L654"><span class="viewcode-link">[source]</span></a></dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">dataset_summary</code><span class="sig-paren">(</span><em>df_in</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L782-L834"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>The data set basics summary.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -589,7 +774,7 @@ is the first date feature in the rdd data frame</li>
 <h3>3.3.2. numeric_summary<a class="headerlink" href="#numeric-summary" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt>
-<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">numeric_summary</code><span class="sig-paren">(</span><em>df_in</em>, <em>columns=None</em>, <em>deciles=False</em>, <em>top_n=5</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L657-L695"><span class="viewcode-link">[source]</span></a></dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">numeric_summary</code><span class="sig-paren">(</span><em>df_in</em>, <em>columns=None</em>, <em>deciles=False</em>, <em>top_n=5</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L837-L875"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>The auditing function for numerical rdd data frame.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -616,7 +801,7 @@ is the first date feature in the rdd data frame</li>
 <h3>3.3.3. category_summary<a class="headerlink" href="#category-summary" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt>
-<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">category_summary</code><span class="sig-paren">(</span><em>df_in</em>, <em>columns=None</em>, <em>top_n=5</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L698-L733"><span class="viewcode-link">[source]</span></a></dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">category_summary</code><span class="sig-paren">(</span><em>df_in</em>, <em>columns=None</em>, <em>top_n=5</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L878-L913"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>The auditing function for categorical rdd data frame.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -645,7 +830,7 @@ is the first date feature in the rdd data frame</li>
 <h3>3.4.1. auditing<a class="headerlink" href="#auditing" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt>
-<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">auditing</code><span class="sig-paren">(</span><em>df_in</em>, <em>writer=None</em>, <em>columns=None</em>, <em>deciles=False</em>, <em>top_freq_item=5</em>, <em>bins=50</em>, <em>top_cat_item=20</em>, <em>method='pearson'</em>, <em>output_dir=None</em>, <em>types='day'</em>, <em>d_time=None</em>, <em>rotation=True</em>, <em>sample_size=None</em>, <em>display=False</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L767-L844"><span class="viewcode-link">[source]</span></a></dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">auditing</code><span class="sig-paren">(</span><em>df_in</em>, <em>writer=None</em>, <em>columns=None</em>, <em>deciles=False</em>, <em>top_freq_item=5</em>, <em>bins=50</em>, <em>top_cat_item=20</em>, <em>method='pearson'</em>, <em>output_dir=None</em>, <em>types='day'</em>, <em>d_time=None</em>, <em>rotation=True</em>, <em>sample_size=None</em>, <em>display=False</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L947-L1024"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>The wrapper of auditing functions.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -688,7 +873,7 @@ default value none</li>
 <h3>3.5.1. fig_plots<a class="headerlink" href="#fig-plots" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt>
-<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">fig_plots</code><span class="sig-paren">(</span><em>df_in</em>, <em>output_dir=None</em>, <em>bins=50</em>, <em>top_n=20</em>, <em>types='day'</em>, <em>d_time=None</em>, <em>rotation=True</em>, <em>sample_size=None</em>, <em>display=False</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L736-L764"><span class="viewcode-link">[source]</span></a></dt>
+<code class="descclassname">PySparkAudit.PySparkAudit.</code><code class="descname">fig_plots</code><span class="sig-paren">(</span><em>df_in</em>, <em>output_dir=None</em>, <em>bins=50</em>, <em>top_n=20</em>, <em>types='day'</em>, <em>d_time=None</em>, <em>rotation=True</em>, <em>sample_size=None</em>, <em>display=False</em>, <em>tracking=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/runawayhorse001/PySparkAudit/blob/master/PySparkAudit/PySparkAudit.py#L916-L944"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>The wrapper for the plot functions.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -740,7 +925,7 @@ default value none</li>
     <p>
         &copy; Copyright 2019, Wenqiang Feng and Yiming Xu
       <span class="lastupdated">
-        Last updated on Jul 02, 2019.
+        Last updated on Jul 03, 2019.
       </span>
 
     </p>
