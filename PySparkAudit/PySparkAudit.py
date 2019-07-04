@@ -55,31 +55,31 @@ def df_merge(dfs, key, how='left'):
 
 def data_types(df_in, tracking=False):
     """
-	Generate the data types of the rdd data frame.
+    Generate the data types of the rdd data frame.
 
-	:param df_in: the input rdd data frame
-	:param tracking: the flag for displaying CPU time, the default value is False
-	:return: data types pandas data frame
+    :param df_in: the input rdd data frame
+    :param tracking: the flag for displaying CPU time, the default value is False
+    :return: data types pandas data frame
 
-	>>> test = spark.createDataFrame([
-	                    ('Joe', 67, 'F', 7000, 'asymptomatic', 286.1, '2019-6-28'),
-	                    ('Henry', 67, 'M', 8000, 'asymptomatic', 229.2, '2019-6-29'),
-	                    ('Sam', 37,  'F', 6000, 'nonanginal', 250.3, '2019-6-30'),
-	                    ('Max', 56, 'M', 9000, 'nontypical', 236.4, '2019-5-28'),
-	                    ('Mat', 56, 'F', 9000, 'asymptomatic', 254.5, '2019-4-28')],
-	                    ['Name', 'Age', 'Sex', 'Sallary', 'ChestPain', 'Chol', 'CreatDate']
-	                   )
-	>>> test = test.withColumn('CreatDate', F.col('CreatDate').cast('timestamp'))
-	>>> from PySparkAudit import data_types
-	>>> data_types(test)
-	     feature     dtypes
-	0       Name     string
-	1        Age     bigint
-	2        Sex     string
-	3    Sallary     bigint
-	4  ChestPain     string
-	5       Chol     double
-	6  CreatDate  timestamp    
+    >>> test = spark.createDataFrame([
+                        ('Joe', 67, 'F', 7000, 'asymptomatic', 286.1, '2019-6-28'),
+                        ('Henry', 67, 'M', 8000, 'asymptomatic', 229.2, '2019-6-29'),
+                        ('Sam', 37,  'F', 6000, 'nonanginal', 250.3, '2019-6-30'),
+                        ('Max', 56, 'M', 9000, 'nontypical', 236.4, '2019-5-28'),
+                        ('Mat', 56, 'F', 9000, 'asymptomatic', 254.5, '2019-4-28')],
+                        ['Name', 'Age', 'Sex', 'Salary', 'ChestPain', 'Chol', 'CreatDate']
+                       )
+    >>> test = test.withColumn('CreatDate', F.col('CreatDate').cast('timestamp'))
+    >>> from PySparkAudit import data_types
+    >>> data_types(test)
+         feature     dtypes
+    0       Name     string
+    1        Age     bigint
+    2        Sex     string
+    3     Salary     bigint
+    4  ChestPain     string
+    5       Chol     double
+    6  CreatDate  timestamp
     """
     if tracking:
         print('================================================================')
@@ -97,33 +97,33 @@ def data_types(df_in, tracking=False):
 
 def dtypes_class(df_in):
     """
-	Generate the data type categories: numerical, categorical, date and unsupported category.
+    Generate the data type categories: numerical, categorical, date and unsupported category.
 
-	:param df_in: the input rdd data frame
-	:return: data type categories
+    :param df_in: the input rdd data frame
+    :return: data type categories
 
-	>>> test = spark.createDataFrame([
-	                    ('Joe', 67, 'F', 7000, 'asymptomatic', 286.1, '2019-6-28'),
-	                    ('Henry', 67, 'M', 8000, 'asymptomatic', 229.2, '2019-6-29'),
-	                    ('Sam', 37,  'F', 6000, 'nonanginal', 250.3, '2019-6-30'),
-	                    ('Max', 56, 'M', 9000, 'nontypical', 236.4, '2019-5-28'),
-	                    ('Mat', 56, 'F', 9000, 'asymptomatic', 254.5, '2019-4-28')],
-	                    ['Name', 'Age', 'Sex', 'Sallary', 'ChestPain', 'Chol', 'CreatDate']
-	                   )
-	>>> test = test.withColumn('CreatDate', F.col('CreatDate').cast('timestamp'))
-	>>> from PySparkAudit import dtypes_class
-	>>> dtypes_class(test)
-	(     feature       DataType
-	0       Name     StringType
-	1        Age       LongType
-	2        Sex     StringType
-	3    Sallary       LongType
-	4  ChestPain     StringType
-	5       Chol     DoubleType
-	6  CreatDate  TimestampType, 
-	['Age', 'Sallary', 'Chol'], 
-	['Name', 'Sex', 'ChestPain'], 
-	['CreatDate'], [])
+    >>> test = spark.createDataFrame([
+                        ('Joe', 67, 'F', 7000, 'asymptomatic', 286.1, '2019-6-28'),
+                        ('Henry', 67, 'M', 8000, 'asymptomatic', 229.2, '2019-6-29'),
+                        ('Sam', 37,  'F', 6000, 'nonanginal', 250.3, '2019-6-30'),
+                        ('Max', 56, 'M', 9000, 'nontypical', 236.4, '2019-5-28'),
+                        ('Mat', 56, 'F', 9000, 'asymptomatic', 254.5, '2019-4-28')],
+                        ['Name', 'Age', 'Sex', 'Salary', 'ChestPain', 'Chol', 'CreatDate']
+                       )
+    >>> test = test.withColumn('CreatDate', F.col('CreatDate').cast('timestamp'))
+    >>> from PySparkAudit import dtypes_class
+    >>> dtypes_class(test)
+    (     feature       DataType
+    0       Name     StringType
+    1        Age       LongType
+    2        Sex     StringType
+    3    Salary       LongType
+    4  ChestPain     StringType
+    5       Chol     DoubleType
+    6  CreatDate  TimestampType,
+    ['Age', 'Salary', 'Chol'],
+    ['Name', 'Sex', 'ChestPain'],
+    ['CreatDate'], [])
     """
     # __all__ = [
     # "DataType", "NullType", "StringType", "BinaryType", "BooleanType", "DateType",
@@ -159,31 +159,31 @@ def dtypes_class(df_in):
 
 def counts(df_in, tracking=False):
     """
-	Generate the row counts and not null rows and distinct counts for each feature.
+    Generate the row counts and not null rows and distinct counts for each feature.
 
-	:param df_in: the input rdd data frame
-	:param tracking: the flag for displaying CPU time, the default value is False
-	:return: the counts in pandas data frame
+    :param df_in: the input rdd data frame
+    :param tracking: the flag for displaying CPU time, the default value is False
+    :return: the counts in pandas data frame
 
-	>>> test = spark.createDataFrame([
-	                    ('Joe', None, 'F', 70000, 'asymptomatic', 286.1, '2019-6-28'),
-	                    ('Henry', 67, 'M', 80000, 'asymptomatic', 229.2, '2019-6-29'),
-	                    ('Sam', 37,  'F', 60000, 'nonanginal', 250.3, '2019-6-30'),
-	                    ('Max', 56, '  ', 90000, None, 236.4, '2019-5-28'),
-	                    ('Mat', 56, 'F', None, 'asymptomatic', 254.5, '2019-4-28')],
-	                    ['Name', 'Age', 'Sex', 'Sallary', 'ChestPain', 'Chol', 'CreatDate']
-	                   )
-	>>> test = test.withColumn('CreatDate', F.col('CreatDate').cast('timestamp'))
-	>>> from PySparkAudit import counts
-	>>> counts(test)
-	     feature  row_count  notnull_count  distinct_count
-	0       Name          5              5               5
-	1        Age          5              4               3
-	2        Sex          5              5               3
-	3    Sallary          5              4               4
-	4  ChestPain          5              4               2
-	5       Chol          5              5               5
-	6  CreatDate          5              5               5
+    >>> test = spark.createDataFrame([
+                        ('Joe', None, 'F', 70000, 'asymptomatic', 286.1, '2019-6-28'),
+                        ('Henry', 67, 'M', 80000, 'asymptomatic', 229.2, '2019-6-29'),
+                        ('Sam', 37,  'F', 60000, 'nonanginal', 250.3, '2019-6-30'),
+                        ('Max', 56, '  ', 90000, None, 236.4, '2019-5-28'),
+                        ('Mat', 56, 'F', None, 'asymptomatic', 254.5, '2019-4-28')],
+                        ['Name', 'Age', 'Sex', 'Salary', 'ChestPain', 'Chol', 'CreatDate']
+                       )
+    >>> test = test.withColumn('CreatDate', F.col('CreatDate').cast('timestamp'))
+    >>> from PySparkAudit import counts
+    >>> counts(test)
+         feature  row_count  notnull_count  distinct_count
+    0       Name          5              5               5
+    1        Age          5              4               3
+    2        Sex          5              5               3
+    3     Salary          5              4               4
+    4  ChestPain          5              4               2
+    5       Chol          5              5               5
+    6  CreatDate          5              5               5
     """
     if tracking:
         print('================================================================')
@@ -205,35 +205,35 @@ def counts(df_in, tracking=False):
 
 def describe(df_in, columns=None, tracking=False):
     """
-	Generate the simple data frame description using `.describe()` function in pyspark.
+    Generate the simple data frame description using `.describe()` function in pyspark.
 
-	:param df_in: the input rdd data frame
-	:param columns: the specific feature columns, the default value is None
-	:param tracking: the flag for displaying CPU time, the default value is False
-	:return: the description in pandas data frame
+    :param df_in: the input rdd data frame
+    :param columns: the specific feature columns, the default value is None
+    :param tracking: the flag for displaying CPU time, the default value is False
+    :return: the description in pandas data frame
 
-	>>> test = spark.createDataFrame([
-	                    ('Joe', 67, 'F', 7000, 'asymptomatic', 286.1, '2019-6-28'),
-	                    ('Henry', 67, 'M', 8000, 'asymptomatic', 229.2, '2019-6-29'),
-	                    ('Sam', 37,  'F', 6000, 'nonanginal', 250.3, '2019-6-30'),
-	                    ('Max', 56, 'M', 9000, 'nontypical', 236.4, '2019-5-28'),
-	                    ('Mat', 56, 'F', 9000, 'asymptomatic', 254.5, '2019-4-28')],
-	                    ['Name', 'Age', 'Sex', 'Sallary', 'ChestPain', 'Chol', 'CreatDate']
-	                   )
-	>>> test = test.withColumn('CreatDate', F.col('CreatDate').cast('timestamp'))
-	>>> from PySparkAudit import describe
-	>>> describe(test)
-	summary   count     mean     ...               min         max
-	feature                      ...                              
-	Name          5     None     ...             Henry         Sam
-	Age           5     56.6     ...                37          67
-	Sex           5     None     ...                 F           M
-	Sallary       5  78000.0     ...             60000       90000
-	ChestPain     5     None     ...      asymptomatic  nontypical
-	Chol          5    251.3     ...             229.2       286.1
-	CreatDate     5     None     ...         2019-4-28   2019-6-30
+    >>> test = spark.createDataFrame([
+                    ('Joe', 67, 'F', 7000, 'asymptomatic', 286.1, '2019-6-28'),
+                    ('Henry', 67, 'M', 8000, 'asymptomatic', 229.2, '2019-6-29'),
+                    ('Sam', 37,  'F', 6000, 'nonanginal', 250.3, '2019-6-30'),
+                    ('Max', 56, 'M', 9000, 'nontypical', 236.4, '2019-5-28'),
+                    ('Mat', 56, 'F', 9000, 'asymptomatic', 254.5, '2019-4-28')],
+                    ['Name', 'Age', 'Sex', 'Salary', 'ChestPain', 'Chol', 'CreatDate']
+                   )
+    >>> test = test.withColumn('CreatDate', F.col('CreatDate').cast('timestamp'))
+    >>> from PySparkAudit import describe
+    >>> describe(test)
+    summary   count     mean     ...               min         max
+    feature                      ...
+    Name          5     None     ...             Henry         Sam
+    Age           5     56.6     ...                37          67
+    Sex           5     None     ...                 F           M
+    Salary        5  78000.0     ...             60000       90000
+    ChestPain     5     None     ...      asymptomatic  nontypical
+    Chol          5    251.3     ...             229.2       286.1
+    CreatDate     5     None     ...         2019-4-28   2019-6-30
 
-	[7 rows x 5 columns]   
+    [7 rows x 5 columns]
     """
     if tracking:
         print('================================================================')
@@ -253,27 +253,27 @@ def describe(df_in, columns=None, tracking=False):
 
 def percentiles(df_in, deciles=False, tracking=False):
     """
-	Generate the percentiles for rdd data frame.
+    Generate the percentiles for rdd data frame.
 
-	:param df_in: the input rdd data frame
-	:param deciles: the flag for generate the deciles
-	:param tracking: the flag for displaying CPU time, the default value is False
-	:return: percentiles in pandas data frame
+    :param df_in: the input rdd data frame
+    :param deciles: the flag for generate the deciles
+    :param tracking: the flag for displaying CPU time, the default value is False
+    :return: percentiles in pandas data frame
 
-	>>> test = spark.createDataFrame([
-	                    ('Joe', 67, 'F', 7000, 'asymptomatic', 286.1, '2019-6-28'),
-	                    ('Henry', 67, 'M', 8000, 'asymptomatic', 229.2, '2019-6-29'),
-	                    ('Sam', 37,  'F', 6000, 'nonanginal', 250.3, '2019-6-30'),
-	                    ('Max', 56, 'M', 9000, 'nontypical', 236.4, '2019-5-28'),
-	                    ('Mat', 56, 'F', 9000, 'asymptomatic', 254.5, '2019-4-28')],
-	                    ['Name', 'Age', 'Sex', 'Sallary', 'ChestPain', 'Chol', 'CreatDate']
-	                   )
-	>>> from PySparkAudit import percentiles
-	>>> percentiles(test)
-	   feature       Q1      Med       Q3
-	0      Age     56.0     67.0     67.0
-	1  Sallary  80000.0  90000.0  90000.0
-	2     Chol    250.3    254.5    286.1	                       
+    >>> test = spark.createDataFrame([
+                        ('Joe', 67, 'F', 7000, 'asymptomatic', 286.1, '2019-6-28'),
+                        ('Henry', 67, 'M', 8000, 'asymptomatic', 229.2, '2019-6-29'),
+                        ('Sam', 37,  'F', 6000, 'nonanginal', 250.3, '2019-6-30'),
+                        ('Max', 56, 'M', 9000, 'nontypical', 236.4, '2019-5-28'),
+                        ('Mat', 56, 'F', 9000, 'asymptomatic', 254.5, '2019-4-28')],
+                        ['Name', 'Age', 'Sex', 'Salary', 'ChestPain', 'Chol', 'CreatDate']
+                       )
+    >>> from PySparkAudit import percentiles
+    >>> percentiles(test)
+       feature       Q1      Med       Q3
+    0      Age     56.0     67.0     67.0
+    1   Salary  80000.0  90000.0  90000.0
+    2     Chol    250.3    254.5    286.1
     """
     if tracking:
         print('================================================================')
@@ -303,30 +303,30 @@ def percentiles(df_in, deciles=False, tracking=False):
 
 def feature_len(df_in, tracking=False):
     """
-	Generate feature length statistical results for each feature in the rdd data frame.
+    Generate feature length statistical results for each feature in the rdd data frame.
 
-	:param df_in: the input rdd data frame
-	:param tracking: the flag for displaying CPU time, the default value is False
-	:return: the feature length statistical results in pandas data frame
+    :param df_in: the input rdd data frame
+    :param tracking: the flag for displaying CPU time, the default value is False
+    :return: the feature length statistical results in pandas data frame
 
-	>>> test = spark.createDataFrame([
-	                    ('Joe', 67, 'F', 7000, 'asymptomatic', 286.1, '2019-6-28'),
-	                    ('Henry', 67, 'M', 8000, 'asymptomatic', 229.2, '2019-6-29'),
-	                    ('Sam', 37,  'F', 6000, 'nonanginal', 250.3, '2019-6-30'),
-	                    ('Max', 56, 'M', 9000, 'nontypical', 236.4, '2019-5-28'),
-	                    ('Mat', 56, 'F', 9000, 'asymptomatic', 254.5, '2019-4-28')],
-	                    ['Name', 'Age', 'Sex', 'Sallary', 'ChestPain', 'Chol', 'CreatDate']
-	                   )
-	>>> from PySparkAudit import feature_len
-	>>> feature_len(test)
-	     feature  min_length  avg_length  max_length
-	0       Name         3.0         3.4         5.0
-	1        Age         2.0         2.0         2.0
-	2        Sex         1.0         1.0         1.0
-	3    Sallary         5.0         5.0         5.0
-	4  ChestPain        10.0        11.2        12.0
-	5       Chol         5.0         5.0         5.0
-	6  CreatDate         9.0         9.0         9.0                       
+    >>> test = spark.createDataFrame([
+                        ('Joe', 67, 'F', 7000, 'asymptomatic', 286.1, '2019-6-28'),
+                        ('Henry', 67, 'M', 8000, 'asymptomatic', 229.2, '2019-6-29'),
+                        ('Sam', 37,  'F', 6000, 'nonanginal', 250.3, '2019-6-30'),
+                        ('Max', 56, 'M', 9000, 'nontypical', 236.4, '2019-5-28'),
+                        ('Mat', 56, 'F', 9000, 'asymptomatic', 254.5, '2019-4-28')],
+                        ['Name', 'Age', 'Sex', 'Salary', 'ChestPain', 'Chol', 'CreatDate']
+                       )
+    >>> from PySparkAudit import feature_len
+    >>> feature_len(test)
+         feature  min_length  avg_length  max_length
+    0       Name         3.0         3.4         5.0
+    1        Age         2.0         2.0         2.0
+    2        Sex         1.0         1.0         1.0
+    3     Salary         5.0         5.0         5.0
+    4  ChestPain        10.0        11.2        12.0
+    5       Chol         5.0         5.0         5.0
+    6  CreatDate         9.0         9.0         9.0
     """
     if tracking:
         print('================================================================')
@@ -350,31 +350,31 @@ def feature_len(df_in, tracking=False):
 
 def freq_items(df_in, top_n=5, tracking=False):
     """
-	Generate the top_n frequent items in for each feature in the rdd data frame.
+    Generate the top_n frequent items in for each feature in the rdd data frame.
 
-	:param df_in: the input rdd data frame
-	:param top_n: the number of the most frequent item
-	:param tracking: the flag for displaying CPU time, the default value is False
-	:return:
+    :param df_in: the input rdd data frame
+    :param top_n: the number of the most frequent item
+    :param tracking: the flag for displaying CPU time, the default value is False
+    :return:
 
-	>>> test = spark.createDataFrame([
-	                    ('Joe', 67, 'F', 7000, 'asymptomatic', 286.1, '2019-6-28'),
-	                    ('Henry', 67, 'M', 8000, 'asymptomatic', 229.2, '2019-6-29'),
-	                    ('Sam', 37,  'F', 6000, 'nonanginal', 250.3, '2019-6-30'),
-	                    ('Max', 56, 'M', 9000, 'nontypical', 236.4, '2019-5-28'),
-	                    ('Mat', 56, 'F', 9000, 'asymptomatic', 254.5, '2019-4-28')],
-	                    ['Name', 'Age', 'Sex', 'Sallary', 'ChestPain', 'Chol', 'CreatDate']
-	                   )  
-	>>> from PySparkAudit import freq_items
-	>>> freq_items(test)
-	     feature                            freq_items[value, freq]
-	0       Name  [[Joe, 1], [Mat, 1], [Henry, 1], [Sam, 1], [Ma...
-	1        Age                        [[67, 2], [56, 2], [37, 1]]
-	2        Sex                                   [[F, 3], [M, 2]]
-	3    Sallary   [[90000, 2], [70000, 1], [80000, 1], [60000, 1]]
-	4  ChestPain  [[asymptomatic, 3], [nontypical, 1], [nonangin...
-	5       Chol  [[286.1, 1], [250.3, 1], [229.2, 1], [236.4, 1...
-	6  CreatDate  [[2019-6-30, 1], [2019-5-28, 1], [2019-4-28, 1...	                     
+    >>> test = spark.createDataFrame([
+                        ('Joe', 67, 'F', 7000, 'asymptomatic', 286.1, '2019-6-28'),
+                        ('Henry', 67, 'M', 8000, 'asymptomatic', 229.2, '2019-6-29'),
+                        ('Sam', 37,  'F', 6000, 'nonanginal', 250.3, '2019-6-30'),
+                        ('Max', 56, 'M', 9000, 'nontypical', 236.4, '2019-5-28'),
+                        ('Mat', 56, 'F', 9000, 'asymptomatic', 254.5, '2019-4-28')],
+                        ['Name', 'Age', 'Sex', 'Salary', 'ChestPain', 'Chol', 'CreatDate']
+                       )
+    >>> from PySparkAudit import freq_items
+    >>> freq_items(test)
+         feature                            freq_items[value, freq]
+    0       Name  [[Joe, 1], [Mat, 1], [Henry, 1], [Sam, 1], [Ma...
+    1        Age                        [[67, 2], [56, 2], [37, 1]]
+    2        Sex                                   [[F, 3], [M, 2]]
+    3    Salary   [[90000, 2], [70000, 1], [80000, 1], [60000, 1]]
+    4  ChestPain  [[asymptomatic, 3], [nontypical, 1], [nonangin...
+    5       Chol  [[286.1, 1], [250.3, 1], [229.2, 1], [236.4, 1...
+    6  CreatDate  [[2019-6-30, 1], [2019-5-28, 1], [2019-4-28, 1...
     """
     if tracking:
         print('================================================================')
@@ -393,36 +393,36 @@ def freq_items(df_in, top_n=5, tracking=False):
 
 def rates(df_in, columns=None, numeric=True, tracking=False):
     """
-	Generate the null, empty, negative, zero and  positive value rates and feature variance for
-	each feature in the rdd data frame.
+    Generate the null, empty, negative, zero and  positive value rates and feature variance for
+    each feature in the rdd data frame.
 
-	:param df_in: the input rdd data frame
-	:param columns: the specific feature columns, the default value is None
-	:param numeric: the flag for numerical rdd data frame, the default value is True
-	:param tracking: the flag for displaying CPU time, the default value is False
-	:return: the null, empty, negative, zero and  positive value rates and feature variance
-	         in pandas data frame
+    :param df_in: the input rdd data frame
+    :param columns: the specific feature columns, the default value is None
+    :param numeric: the flag for numerical rdd data frame, the default value is True
+    :param tracking: the flag for displaying CPU time, the default value is False
+    :return: the null, empty, negative, zero and  positive value rates and feature variance
+             in pandas data frame
 
-	>>> test = spark.createDataFrame([
-	                    ('Joe', 67, 'F', 7000, 'asymptomatic', 286.1, '2019-6-28'),
-	                    ('Henry', 67, 'M', 8000, 'asymptomatic', 229.2, '2019-6-29'),
-	                    ('Sam', 37,  'F', 6000, 'nonanginal', 250.3, '2019-6-30'),
-	                    ('Max', 56, 'M', 9000, 'nontypical', 236.4, '2019-5-28'),
-	                    ('Mat', 56, 'F', 9000, 'asymptomatic', 254.5, '2019-4-28')],
-	                    ['Name', 'Age', 'Sex', 'Sallary', 'ChestPain', 'Chol', 'CreatDate']
-	                   )      
-	>>> from PySparkAudit import rates
-	>>> rates(test)
-	     feature  feature_variance    ...     rate_zero  rate_pos
-	0        Age               0.6    ...           0.0       1.0
-	1    Sallary               0.8    ...           0.0       1.0
-	2       Chol               1.0    ...           0.0       1.0
-	3       Name               1.0    ...           0.0       0.0
-	4        Sex               0.4    ...           0.0       0.0
-	5  ChestPain               0.6    ...           0.0       0.0
-	6  CreatDate               1.0    ...           0.0       0.0
+    >>> test = spark.createDataFrame([
+                        ('Joe', 67, 'F', 7000, 'asymptomatic', 286.1, '2019-6-28'),
+                        ('Henry', 67, 'M', 8000, 'asymptomatic', 229.2, '2019-6-29'),
+                        ('Sam', 37,  'F', 6000, 'nonanginal', 250.3, '2019-6-30'),
+                        ('Max', 56, 'M', 9000, 'nontypical', 236.4, '2019-5-28'),
+                        ('Mat', 56, 'F', 9000, 'asymptomatic', 254.5, '2019-4-28')],
+                        ['Name', 'Age', 'Sex', 'Salary', 'ChestPain', 'Chol', 'CreatDate']
+                       )
+    >>> from PySparkAudit import rates
+    >>> rates(test)
+         feature  feature_variance    ...     rate_zero  rate_pos
+    0        Age               0.6    ...           0.0       1.0
+    1     Salary               0.8    ...           0.0       1.0
+    2       Chol               1.0    ...           0.0       1.0
+    3       Name               1.0    ...           0.0       0.0
+    4        Sex               0.4    ...           0.0       0.0
+    5  ChestPain               0.6    ...           0.0       0.0
+    6  CreatDate               1.0    ...           0.0       0.0
 
-	[7 rows x 7 columns]	                            
+    [7 rows x 7 columns]
     """
     if tracking:
         print('================================================================')
@@ -473,33 +473,34 @@ def rates(df_in, columns=None, numeric=True, tracking=False):
 
 def corr_matrix(df_in, method="pearson", output_dir=None, rotation=True, display=False, tracking=False):
     """
-	Generate the correlation matrix and heat map plot for rdd data frame.
+    Generate the correlation matrix and heat map plot for rdd data frame.
 
-	:param df_in: the input rdd data frame
-	:param method: the method which applied to calculate the correlation matrix: pearson or spearman.
-	            the default value is pearson
-	:param output_dir: the out put directory, the default value is the current working directory
-	:param rotation: the flag for rotating the xticks in the plot, the default value is True
-	:param display: the flag for displaying the figures, the default value is False
-	:param tracking: the flag for displaying CPU time, the default value is False
-	:return: the correlation matrix in pandas data frame
-	>>> test = spark.createDataFrame([
-	                    ('Joe', 67, 'F', 7000, 'asymptomatic', 286.1, '2019-6-28'),
-	                    ('Henry', 67, 'M', 8000, 'asymptomatic', 229.2, '2019-6-29'),
-	                    ('Sam', 37,  'F', 6000, 'nonanginal', 250.3, '2019-6-30'),
-	                    ('Max', 56, 'M', 9000, 'nontypical', 236.4, '2019-5-28'),
-	                    ('Mat', 56, 'F', 9000, 'asymptomatic', 254.5, '2019-4-28')],
-	                    ['Name', 'Age', 'Sex', 'Sallary', 'ChestPain', 'Chol', 'CreatDate']
-	                   )   
-	>>> from PySparkAudit import corr_matrix
-	>>> corr_matrix(test)
-	================================================================
-	The correlation matrix plot Corr.png was located at:
-	/home/feng/Audited
-	              Age   Sallary      Chol
-	Age      1.000000  0.431663  0.147226
-	Sallary  0.431663  1.000000 -0.388171
-	Chol     0.147226 -0.388171  1.000000	                       
+    :param df_in: the input rdd data frame
+    :param method: the method which applied to calculate the correlation matrix: pearson or spearman.
+                the default value is pearson
+    :param output_dir: the out put directory, the default value is the current working directory
+    :param rotation: the flag for rotating the xticks in the plot, the default value is True
+    :param display: the flag for displaying the figures, the default value is False
+    :param tracking: the flag for displaying CPU time, the default value is False
+    :return: the correlation matrix in pandas data frame
+    
+    >>> test = spark.createDataFrame([
+                        ('Joe', 67, 'F', 7000, 'asymptomatic', 286.1, '2019-6-28'),
+                        ('Henry', 67, 'M', 8000, 'asymptomatic', 229.2, '2019-6-29'),
+                        ('Sam', 37,  'F', 6000, 'nonanginal', 250.3, '2019-6-30'),
+                        ('Max', 56, 'M', 9000, 'nontypical', 236.4, '2019-5-28'),
+                        ('Mat', 56, 'F', 9000, 'asymptomatic', 254.5, '2019-4-28')],
+                        ['Name', 'Age', 'Sex', 'Salary', 'ChestPain', 'Chol', 'CreatDate']
+                       )
+    >>> from PySparkAudit import corr_matrix
+    >>> corr_matrix(test)
+    ================================================================
+    The correlation matrix plot Corr.png was located at:
+    /home/feng/Audited
+                  Age   Salary      Chol
+    Age      1.000000  0.431663  0.147226
+    Salary   0.431663  1.000000 -0.388171
+    Chol     0.147226 -0.388171  1.000000
     """
     _, num_fields, _, _, _ = dtypes_class(df_in)
 
@@ -798,7 +799,7 @@ def dataset_summary(df_in, tracking=False):
     d_types.columns = col_names
 
     cols = df_in.columns
-    mask = df_in.withColumn('zero_count', sum(F.when(F.col(c) == '0', 1).otherwise(0) for c in cols)) \
+    mask = df_in.withColumn('zero_count', sum(F.when(F.col(c) == 0, 1).otherwise(0) for c in cols)) \
                 .withColumn('null_count', sum(F.col(c).isNull().cast('int') for c in cols)) \
                 .withColumn('empty_count', sum(F.when(F.trim(F.col(c)) == '', 1).otherwise(0) for c in cols)) \
                 .select(['null_count', 'empty_count', 'zero_count'])
